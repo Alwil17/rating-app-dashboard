@@ -39,7 +39,7 @@ A modern dashboard for managing and administering your Rating API.
 
    Create a `.env` file in the root directory and add your API endpoint:
    ```
-   REACT_APP_API_URL=https://rating-api-fvz9.onrender.com
+   NEXT_PUBLIC_API_URL=https://rating-api-fvz9.onrender.com
    ```
 
 4. **Run the development server:**
