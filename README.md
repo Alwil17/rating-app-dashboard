@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rating App Dashboard
+
+A modern dashboard for managing and administering your Rating API.
+
+## Overview
+
+**Rating App Dashboard** is a web-based admin panel designed to help you efficiently manage and monitor your rating system. It consumes your custom Rating API, providing a user-friendly interface for administrative tasks such as viewing, editing, and managing ratings and users.
+
+## Features
+
+- **Dashboard Overview:** Visualize key metrics and recent activity.
+- **User Management:** View and manage users with ease.
+- **Ratings Management:** Approve, edit, or delete ratings.
+- **Search & Filter:** Quickly find users or ratings.
+- **Responsive Design:** Works seamlessly on desktop and mobile devices.
+- **Authentication:** Secure admin access (if enabled).
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Node.js](https://nodejs.org/) (v16+ recommended)
+- Your Rating API running and accessible
+
+### Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/Alwil17/rating-app-dashboard.git
+   cd rating-app-dashboard
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Create a `.env` file in the root directory and add your API endpoint:
+   ```
+   REACT_APP_API_URL=https://rating-api-fvz9.onrender.com
+   ```
+
+4. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+
+5. **Open your browser:**
+   ```
+   http://localhost:3000
+   ```
+
+## Usage
+
+- Log in as an admin (if authentication is enabled).
+- Use the sidebar to navigate between dashboard sections.
+- Manage users and ratings as needed.
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router routes and pages
+│   ├── auth/               # Authentication routes
+│   ├── board/              # Main application routes (formerly dashboard)
+│   └── ...
+├── components/             # Reusable UI components
+│   ├── ui/                 # Base components (shadcn/ui only)
+│   ├── enhanced/           # Enhanced shadcn components with logic
+│   ├── shared/             # Custom shared components
+│   │   ├── navigation/     # Navigation-related components (app.sidebar, search.form, team.switcher)
+│   │   ├── theme/          # Theme-related components (mode-toggle)
+│   │   └── others/         # Other shared components (feedback.dialog)
+│   └── ...
+├── config/                 # Global configuration
+│   ├── constants.ts        # Application constants
+│   ├── messages.ts         # Error and success messages
+│   ├── routes.ts           # Centralized route definitions
+│   └── navigation-items.tsx # Navigation configuration
+├── hooks/                  # Custom React hooks
+│   ├── queries/            # TanStack Query hooks
+│   └── ...
+├── lib/                    # Utilities and functions
+│   └── utils.ts            # Utility functions
+├── schema/                 # Validation schemas (Zod)
+├── server/                 # Server-side logic
+│   ├── services/           # Business services
+│   ├── middleware/         # Server middleware
+│   └── ...
+├── types/                  # TypeScript type definitions
+│   ├── auth.types.ts       # Authentication related types
+│   ├── rate-limiter.types.ts # Rate limiter related types
+│   └── ...
+└── utils/                  # Specific utilities
+    ├── providers/          # React providers
+    └── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
+This project is licensed under the MIT License.
 
-To learn more about Next.js, take a look at the following resources:
+## Acknowledgements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Inspired by [univ-check-ui](https://github.com/tiger-githubb/univ-check-ui).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Made with ❤️ for admin productivity.**
