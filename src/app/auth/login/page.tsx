@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { routes } from '@/config/routes';
 import { useLoginMutation } from '@/hooks/queries/use-auth.query';
 import { loginSchema, type LoginInput } from '@/schema/login.schema';
-import { withAuth } from '@/components/auth/with-auth';
+import { AuthorizationError } from '@/server/services/auth.service';
 
 function LoginPage() {
   const router = useRouter();
@@ -29,14 +29,18 @@ function LoginPage() {
 
   useEffect(() => {
     if (isSuccess) {
-      router.replace(routes.board.home);
+      router.replace(routes.admin.home);
     }
   }, [isSuccess, router]);
 
   const onSubmit = (data: LoginInput) => {
     login(data, {
       onError: (error) => {
-        toast.error(error.message);
+        if (error instanceof AuthorizationError) {
+          toast.error('Access denied. This dashboard is for administrators only.');
+        } else {
+          toast.error(error.message);
+        }
       },
     });
   };
@@ -45,10 +49,9 @@ function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Welcome back</CardTitle>
-          <CardDescription>Sign in to your account to continue</CardDescription>
+          <CardTitle>Admin Login</CardTitle>
+          <CardDescription>Sign in to access the admin dashboard</CardDescription>
         </CardHeader>
-        
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -59,7 +62,7 @@ function LoginPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@example.com" type="email" {...field} />
+                      <Input placeholder="admin@example.com" type="email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -84,14 +87,9 @@ function LoginPage() {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <Button variant="link" asChild className="px-2">
-            <a href={routes.auth.forgotPassword}>Forgot password?</a>
-          </Button>
-        </CardFooter>
       </Card>
     </div>
   );
 }
 
-export default withAuth(LoginPage, { requireAuth: false, redirectTo: routes.board.home }); 
+export default LoginPage; 
