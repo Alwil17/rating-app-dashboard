@@ -6,10 +6,11 @@ export const routes = {
     resetPassword: '/auth/reset-password',
     logout: '/auth/logout',
   },
-  board: {
-    home: '/board',
-    profile: '/board/profile',
-    settings: '/board/settings',
+  admin: {
+    home: '/admin',
+    users: 'admin/users',
+    profile: 'admin/profile',
+    settings: '/admin/settings'
   },
   api: {
     auth: {
