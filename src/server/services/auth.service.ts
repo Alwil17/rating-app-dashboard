@@ -12,6 +12,13 @@ export class AuthenticationError extends Error {
   }
 }
 
+export class AuthorizationError extends Error {
+  constructor() {
+    super("Access denied. Admin privileges required.");
+    this.name = "AuthorizationError";
+  }
+}
+
 export class AuthService {
   static async login(credentials: LoginInput): Promise<AuthResponse> {
     try {
@@ -47,7 +54,12 @@ export class AuthService {
 
       const user = userResponse.data;
 
-      // 3. Create auth response and save token
+      // 3. Verify admin role
+      if (user.role !== 'admin') {
+        throw new AuthorizationError();
+      }
+
+      // 4. Create auth response and save token
       const authResponse: AuthResponse = {
         user,
         token: accessToken,
@@ -58,6 +70,9 @@ export class AuthService {
 
       return authResponse;
     } catch (error) {
+      if (error instanceof AuthorizationError) {
+        throw error;
+      }
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.detail || "Authentication failed";
         throw new AuthenticationError(message);
@@ -75,8 +90,18 @@ export class AuthService {
         },
       });
 
-      return response.data;
+      const user = response.data;
+      
+      // Verify admin role
+      if (user.role !== 'admin') {
+        throw new AuthorizationError();
+      }
+
+      return user;
     } catch (error) {
+      if (error instanceof AuthorizationError) {
+        throw error;
+      }
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.detail || "Failed to fetch user profile";
         throw new AuthenticationError(message);

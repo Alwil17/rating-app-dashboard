@@ -9,14 +9,12 @@ export function middleware(request: NextRequest) {
 
   // Public paths that don't require authentication
   const isPublicPath = [
-    routes.auth.login,
-    routes.auth.register,
-    '/api/auth',
+    routes.auth.login
   ].some(path => pathname.startsWith(path));
 
   // If the path is public and user is authenticated, redirect to dashboard
   if (isPublicPath && authToken) {
-    return NextResponse.redirect(new URL(routes.board.home, request.url));
+    return NextResponse.redirect(new URL(routes.admin.home, request.url));
   }
 
   // If the path is protected and user is not authenticated, redirect to login

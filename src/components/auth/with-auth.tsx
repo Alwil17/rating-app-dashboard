@@ -18,7 +18,7 @@ export function withAuth<P extends object>(
         if (requireAuth && !isAuthenticated) {
           router.replace(redirectTo);
         } else if (!requireAuth && isAuthenticated) {
-          router.replace(routes.board.home);
+          router.replace(routes.admin.home);
         }
       }
     }, [isAuthenticated, isLoading, requireAuth, redirectTo, router]);
