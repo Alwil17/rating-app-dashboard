@@ -1,4 +1,4 @@
-export type UserRole = "ADMIN";
+export type UserRole = 'admin' | 'user';
 
 export interface AuthResponse {
   user: User;
@@ -13,4 +13,11 @@ export interface User {
   role: UserRole;
   createdAt: string;
   updatedAt?: string;
+}
+
+// Helper type for role checks
+export const ADMIN_ROLES: UserRole[] = ['admin'];
+
+export function isAdmin(user: User | null): boolean {
+  return !!user && ADMIN_ROLES.includes(user.role);
 }
