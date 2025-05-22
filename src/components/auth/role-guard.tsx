@@ -1,10 +1,11 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/auth.context';
-import { UserRole, isAdmin } from '@/types/auth.types';
+import { UserRole } from '@/types/auth.types';
 import { routes } from '@/config/routes';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 interface RoleGuardProps {
   children: ReactNode;
@@ -17,18 +18,29 @@ export function RoleGuard({
   allowedRoles,
   fallbackPath = routes.admin.home,
 }: RoleGuardProps) {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
-  // If user is not authenticated, they shouldn't be here anyway
-  if (!isAuthenticated || !user) {
-    router.replace(routes.auth.login);
-    return null;
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isAuthenticated || !user) {
+        router.replace(routes.auth.login);
+      } else if (!allowedRoles.includes(user.role)) {
+        router.replace(fallbackPath);
+      }
+    }
+  }, [isAuthenticated, isLoading, user, allowedRoles, fallbackPath, router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
-  // Check if user has required role
-  if (!allowedRoles.includes(user.role)) {
-    router.replace(fallbackPath);
+  // Don't render anything while redirecting
+  if (!isAuthenticated || !user || !allowedRoles.includes(user.role)) {
     return null;
   }
 
@@ -42,21 +54,21 @@ export function withAdminGuard<P extends object>(
 ) {
   return function WithAdminGuard(props: P) {
     return (
-      <RoleGuard allowedRoles={['user']} fallbackPath={options.fallbackPath}>
+      <RoleGuard allowedRoles={['admin']} fallbackPath={options.fallbackPath}>
         <WrappedComponent {...props} />
       </RoleGuard>
     );
   };
 }
 
-// Convenience HOC for teacher/admin routes
-export function withTeacherGuard<P extends object>(
+// Remove teacher guard since we don't have teacher role in our types
+export function withUserGuard<P extends object>(
   WrappedComponent: React.ComponentType<P>,
   options: { fallbackPath?: string } = {}
 ) {
-  return function WithTeacherGuard(props: P) {
+  return function WithUserGuard(props: P) {
     return (
-      <RoleGuard allowedRoles={['user']} fallbackPath={options.fallbackPath}>
+      <RoleGuard allowedRoles={['user', 'admin']} fallbackPath={options.fallbackPath}>
         <WrappedComponent {...props} />
       </RoleGuard>
     );
