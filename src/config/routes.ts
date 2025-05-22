@@ -8,15 +8,16 @@ export const routes = {
   },
   admin: {
     home: '/admin',
-    users: 'admin/users',
-    profile: 'admin/profile',
-    settings: '/admin/settings'
+    users: '/admin/users',
+    profile: '/admin/profile',
+    settings: '/admin/settings',
+    ratings: '/admin/ratings',
   },
   api: {
     auth: {
-      login: '/api/auth/login',
-      register: '/api/auth/register',
-      me: '/api/auth/me',
+      login: '/auth/token',
+      register: '/auth/register',
+      me: '/auth/me',
     },
   },
 } as const;
