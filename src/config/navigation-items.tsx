@@ -5,6 +5,7 @@ import {
   Settings,
   UserCircle,
   BarChart3,
+  List,
 } from 'lucide-react';
 import { routes } from './routes';
 
@@ -29,6 +30,16 @@ export const mainNavigation: NavMenuGroup[] = [
         icon: LayoutDashboard,
       },
       {
+        title: "Items",
+        url: routes.admin.items,
+        icon: List,
+      },
+      {
+        title: "Utilisateurs",
+        url: routes.admin.users,
+        icon: Users,
+      },
+      {
         title: "Statistiques",
         url: routes.admin.ratings,
         icon: BarChart3,
@@ -37,11 +48,6 @@ export const mainNavigation: NavMenuGroup[] = [
         title: "Évaluations",
         url: routes.admin.ratings,
         icon: Star,
-      },
-      {
-        title: "Utilisateurs",
-        url: routes.admin.users,
-        icon: Users,
       },
     ],
   },
