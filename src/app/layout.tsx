@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/contexts/auth.context';
 import "./globals.css";
+import QueryProvider from "@/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,16 +16,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-// Create a client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000, // 1 minute
-      retry: 1,
-    },
-  },
 });
 
 export default function RootLayout({
@@ -42,12 +33,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <QueryClientProvider client={queryClient}>
+          <QueryProvider>
             <AuthProvider>
               {children}
               <Toaster position="top-right" />
             </AuthProvider>
-          </QueryClientProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
