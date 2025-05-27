@@ -12,6 +12,7 @@ export const routes = {
     profile: '/admin/profile',
     settings: '/admin/settings',
     ratings: '/admin/ratings',
+    items: '/admin/items',
   },
   api: {
     auth: {

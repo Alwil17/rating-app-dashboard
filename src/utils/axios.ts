@@ -1,23 +1,45 @@
 import axios from "axios";
+import { getCookie } from "./cookies";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000", // URL de repli si la variable d'environnement n'est pas définie
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Intercepteur pour gérer les erreurs globalement
+// Add request interceptor to handle auth token from cookies
+api.interceptors.request.use(
+  (config) => {
+    const token = getCookie("auth-token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(new Error(error.message ?? String(error)));
+  }
+);
+
+// Response interceptor with error handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Log détaillé de l'erreur pour le débogage
-    console.error("Erreur API:", {
+    // Handle authentication errors
+    /* if (error.response?.status === 401) {
+      // Optionally redirect to login or handle token expiration
+      window.location.href = '/auth/login';
+    } */
+
+    console.log(error);
+    console.error("API Error:", {
       url: error.config?.url,
       method: error.config?.method,
       status: error.response?.status,
       data: error.response?.data,
     });
+
     return Promise.reject(error);
   }
 );
