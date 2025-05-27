@@ -4,10 +4,17 @@ import { useAuth } from '@/contexts/auth.context';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Users, Star, Clock, Plus } from 'lucide-react';
+import { useBreadcrumb } from '@/contexts/breadcrumb.context';
+import { useEffect } from 'react';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
+  const { setPageTitle } = useBreadcrumb();
 
+  useEffect(() => {
+    setPageTitle('Tableau de bord');
+  }, [setPageTitle]);
+  
   const stats = [
     {
       label: 'Total Users',
