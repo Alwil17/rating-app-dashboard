@@ -8,8 +8,6 @@ import { useBreadcrumb } from '@/contexts/breadcrumb.context';
 import { useEffect } from 'react';
 import { useStats } from '@/hooks/useStats';
 import { useChartData } from '@/hooks/useChartData';
-
-import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis, Line, LineChart, PieChart, Pie } from "recharts"
 import {
   CardContent,
@@ -62,7 +60,6 @@ export default function AdminDashboardPage() {
         ratings: ratingsOverTime.values[index],
       });
     }
-    console.log('Formatted Ratings Data 1 :', acc);
     return acc;
   }, []);
 
@@ -182,6 +179,7 @@ export default function AdminDashboardPage() {
             ) : (
               <ChartContainer config={chartConfig}>
                 <BarChart
+                  accessibilityLayer
                   width={500}
                   height={300}
                   data={formattedRatingsData}
@@ -205,7 +203,7 @@ export default function AdminDashboardPage() {
                     cursor={false}
                     content={<ChartTooltipContent indicator="dashed" />}
                   />
-                  <Bar dataKey="ratings" stroke="var(--chart-1)" radius={4} />
+                  <Bar dataKey="ratings" fill="var(--color-ratings)" radius={4} />
                 </BarChart>
               </ChartContainer>
             )}
