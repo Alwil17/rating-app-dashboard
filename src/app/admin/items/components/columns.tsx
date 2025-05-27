@@ -4,7 +4,7 @@ import { ItemResponse } from "@/schema/item.schema"
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Star } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, Star } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,17 @@ import {
 export const columns: ColumnDef<ItemResponse>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    }
   },
   {
     accessorKey: "categories",
@@ -38,7 +48,17 @@ export const columns: ColumnDef<ItemResponse>[] = [
   },
   {
     accessorKey: "avg_rating",
-    header: "Rating",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Rating
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const rating = row.getValue("avg_rating") as number
       const count = row.original.count_rating
@@ -53,7 +73,17 @@ export const columns: ColumnDef<ItemResponse>[] = [
   },
   {
     accessorKey: "created_at",
-    header: "Created",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       return new Date(row.getValue("created_at")).toLocaleDateString()
     },
