@@ -17,13 +17,14 @@ import {
 import { mainNavigation } from "@/config/navigation-items"
 import Link from "next/link";
 import { usePathname } from "next/navigation"
+import { PiSignOutDuotone } from "react-icons/pi";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const pathname = usePathname();
 
     const isActive = (url: string) => {
-      if (url === "#") return false;
-      return pathname === url;
+        if (url === "#") return false;
+        return pathname === url;
     };
 
     return (
@@ -56,31 +57,45 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarGroupContent className="px-2">
                             <SidebarMenu>
                                 {section.items.map((item) => (
-                                        <SidebarMenuItem key={item.title}>
-                                            <SidebarMenuButton
-                                                asChild
-                                                className="group/menu-button font-medium gap-3 h-9 rounded-md bg-gradient-to-r hover:bg-transparent hover:from-sidebar-accent hover:to-sidebar-accent/40 data-[active=true]:from-primary/20 data-[active=true]:to-primary/5 [&>svg]:size-auto"
-                                                isActive={isActive(item.url)}
-                                            >
-                                                <Link href={item.url}>
-                                                    {item.icon && (
-                                                        <item.icon
-                                                            className="text-muted-foreground/60 group-data-[active=true]/menu-button:text-primary"
-                                                            size={22}
-                                                            aria-hidden="true"
-                                                        />
-                                                    )}
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))}
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton
+                                            asChild
+                                            className="group/menu-button font-medium gap-3 h-9 rounded-md bg-gradient-to-r hover:bg-transparent hover:from-sidebar-accent hover:to-sidebar-accent/40 data-[active=true]:from-primary/20 data-[active=true]:to-primary/5 [&>svg]:size-auto"
+                                            isActive={isActive(item.url)}
+                                        >
+                                            <Link href={item.url}>
+                                                {item.icon && (
+                                                    <item.icon
+                                                        className="text-muted-foreground/60 group-data-[active=true]/menu-button:text-primary"
+                                                        size={22}
+                                                        aria-hidden="true"
+                                                    />
+                                                )}
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ))}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
                 ))}
             </SidebarContent>
-            <SidebarFooter />
+            <SidebarFooter>
+                <hr className="border-t border-border mx-2 -mt-px" />
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton className="font-medium gap-3 h-9 rounded-md bg-gradient-to-r hover:bg-transparent hover:from-sidebar-accent hover:to-sidebar-accent/40 data-[active=true]:from-primary/20 data-[active=true]:to-primary/5 [&>svg]:size-auto">
+                            <PiSignOutDuotone
+                                className="text-muted-foreground/60 group-data-[active=true]/menu-button:text-primary"
+                                size={22}
+                                aria-hidden="true"
+                            />
+                            <span>Se déconnecter</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
         </Sidebar>
     )
 }
