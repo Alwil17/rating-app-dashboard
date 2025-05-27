@@ -3,13 +3,15 @@
 import { useAuth } from '@/contexts/auth.context';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Star, Clock, Plus } from 'lucide-react';
+import { Users, Star, Clock, Plus, Loader2 } from 'lucide-react';
 import { useBreadcrumb } from '@/contexts/breadcrumb.context';
 import { useEffect } from 'react';
+import { useStats } from '@/hooks/useStats';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
   const { setPageTitle } = useBreadcrumb();
+  const { totalUsers, totalRatings, recentActivity, isLoading, error } = useStats();
 
   useEffect(() => {
     setPageTitle('Tableau de bord');
@@ -18,19 +20,19 @@ export default function AdminDashboardPage() {
   const stats = [
     {
       label: 'Total Users',
-      value: '0',
+      value: isLoading ? '-' : totalUsers.toString(),
       icon: Users,
       color: 'text-blue-600',
     },
     {
       label: 'Total Ratings',
-      value: '0',
+      value: isLoading ? '-' : totalRatings.toString(),
       icon: Star,
       color: 'text-yellow-600',
     },
     {
       label: 'Recent Activity',
-      value: '0',
+      value: isLoading ? '-' : recentActivity.toString(),
       icon: Clock,
       color: 'text-green-600',
     },
@@ -66,7 +68,11 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-                  <p className="text-2xl font-bold mt-1">{stat.value}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-2xl font-bold mt-1">{stat.value}</p>
+                    {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+                  </div>
+                  {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
                 </div>
                 <div className={`p-3 rounded-full bg-gray-50 ${stat.color}`}>
                   <Icon className="h-6 w-6" />
@@ -106,4 +112,4 @@ export default function AdminDashboardPage() {
       </div>
     </div>
   );
-} 
+}
