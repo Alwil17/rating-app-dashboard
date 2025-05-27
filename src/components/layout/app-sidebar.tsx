@@ -15,7 +15,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { mainNavigation } from "@/config/navigation-items"
-import { Link } from "lucide-react"
+import Link from "next/link";
 import { usePathname } from "next/navigation"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
