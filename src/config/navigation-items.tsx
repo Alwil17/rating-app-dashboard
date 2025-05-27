@@ -2,8 +2,6 @@ import {
   LayoutDashboard,
   Users,
   Star,
-  School,
-  GraduationCap,
   Settings,
   UserCircle,
   BarChart3,
