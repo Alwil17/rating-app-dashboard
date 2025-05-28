@@ -40,7 +40,7 @@ export default function AdminUsersPage() {
                 title="Users Management"
                 subtitle="Manage and organize your users"
                 action={{
-                    label: "Add User",
+                    label: "Add new admin",
                     onClick: () => console.log("Add user clicked"),
                 }}
             />
