@@ -1,7 +1,7 @@
 'use client';
 
 import { useBreadcrumb } from "@/contexts/breadcrumb.context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/page-header";
 import { DataTable } from "@/components/ui/datatable";
 import { UserResponse } from "@/schema/user.schema";
@@ -9,9 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 import api from "@/utils/axios";
 import { Loader2 } from "lucide-react";
 import { columns } from "./components/columns";
+import { UserDetailsModal } from "./components/user-details-modal";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
+    const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
     
     const { data: users, isLoading, error } = useQuery<UserResponse[]>({
         queryKey: ['users'],
@@ -53,10 +55,19 @@ export default function AdminUsersPage() {
                 ) : (
                     <DataTable 
                         columns={columns} 
-                        data={users || []} 
+                        data={users || []}
+                        meta={{
+                            onViewDetails: (user: UserResponse) => setSelectedUser(user)
+                        }}
                     />
                 )}
             </div>
+
+            <UserDetailsModal 
+                user={selectedUser}
+                open={!!selectedUser}
+                onOpenChange={(open) => !open && setSelectedUser(null)}
+            />
         </div>
     );
 }
