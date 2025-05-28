@@ -26,16 +26,21 @@ export const columns: ColumnDef<UserResponse>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src={user.image_url || undefined} />
+            <AvatarImage src={user.image_url ?? undefined} />
             <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>
             <p className="font-medium">{user.name}</p>
-            <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
         </div>
       )
     },
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Email"/>
+    )
   },
   {
     accessorKey: "role",
