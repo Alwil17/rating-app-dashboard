@@ -15,6 +15,37 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { DataTableColumnHeader } from "@/components/ui/datatable-column-header"
 
+interface ActionsProps {
+  user: UserResponse
+  onViewDetails: (user: UserResponse) => void
+}
+
+const Actions = ({ user, onViewDetails }: ActionsProps) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
+          Copy ID
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onViewDetails(user)}>
+          View details
+        </DropdownMenuItem>
+        <DropdownMenuItem>Edit user</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive">Delete user</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
 export const columns: ColumnDef<UserResponse>[] = [
   {
     accessorKey: "name",
@@ -68,32 +99,12 @@ export const columns: ColumnDef<UserResponse>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const user = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
-              Delete user
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+      // @ts-ignore - Custom table meta
+      const { onViewDetails } = table.options.meta || {}
+      
+      return <Actions user={user} onViewDetails={onViewDetails} />
     },
   },
 ]
