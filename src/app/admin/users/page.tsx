@@ -4,32 +4,31 @@ import { useBreadcrumb } from "@/contexts/breadcrumb.context";
 import { useEffect } from "react";
 import { PageHeader } from "@/components/ui/page-header";
 import { DataTable } from "@/components/ui/datatable";
-import { columns } from "./components/columns";
-import { ItemResponse } from "@/schema/item.schema";
+import { UserResponse } from "@/schema/user.schema";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/utils/axios";
-import { Package } from "lucide-react";
 import { Loader2 } from "lucide-react";
+import { columns } from "./components/columns";
 
-export default function AdminItemsPage() {
+export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
     
-    const { data: items, isLoading, error } = useQuery<ItemResponse[]>({
-        queryKey: ['items'],
+    const { data: users, isLoading, error } = useQuery<UserResponse[]>({
+        queryKey: ['users'],
         queryFn: async () => {
-            const response = await api.get('/items');
+            const response = await api.get('/users');
             return response.data;
         }
     });
 
     useEffect(() => {
-        setPageTitle('Items Management');
+        setPageTitle('Users Management');
     }, [setPageTitle]);
 
     if (error) {
         return (
             <div className="flex flex-col items-center justify-center h-96">
-                <p className="text-destructive">Error loading items</p>
+                <p className="text-destructive">Error loading users list</p>
                 <p className="text-sm text-muted-foreground">{(error as Error).message}</p>
             </div>
         );
@@ -38,11 +37,11 @@ export default function AdminItemsPage() {
     return (
         <div>
             <PageHeader
-                title="Items Management"
-                subtitle="Manage and organize your items catalog"
+                title="Users Management"
+                subtitle="Manage and organize your users"
                 action={{
-                    label: "Add Item",
-                    onClick: () => console.log("Add item clicked"),
+                    label: "Add new admin",
+                    onClick: () => console.log("Add user clicked"),
                 }}
             />
             
@@ -54,7 +53,7 @@ export default function AdminItemsPage() {
                 ) : (
                     <DataTable 
                         columns={columns} 
-                        data={items || []} 
+                        data={users || []} 
                     />
                 )}
             </div>
