@@ -123,7 +123,7 @@ export function AdminFormModal({ open, onOpenChange, initialData, onSuccess }: R
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Role</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue="admin">
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl className='w-full'>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Sélctionnez le role" />
