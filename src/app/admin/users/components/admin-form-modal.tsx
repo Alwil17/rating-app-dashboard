@@ -21,9 +21,10 @@ interface AdminFormModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     initialData?: UserResponse | null;
+    onSuccess?: () => void;
 }
 
-export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<AdminFormModalProps>) {
+export function AdminFormModal({ open, onOpenChange, initialData, onSuccess }: Readonly<AdminFormModalProps>) {
     const isEdit = !!initialData;
 
     const createMutation = useCreateAdminMutation();
@@ -63,6 +64,7 @@ export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<Adm
             updateMutation.mutate(data as UserUpdate, {
                 onSuccess: () => {
                     onOpenChange(false);
+                    onSuccess?.(); // trigger refetch
                 },
             });
         } else {
@@ -75,6 +77,7 @@ export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<Adm
                         role: 'admin',
                     });
                     onOpenChange(false);
+                    onSuccess?.(); // trigger refetch
                 },
             });
         }
