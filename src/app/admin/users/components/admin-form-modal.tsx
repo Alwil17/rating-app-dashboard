@@ -14,7 +14,7 @@ interface AdminFormModalProps {
     initialData?: UserResponse | null;
 }
 
-export function AdminFormModal({ open, onOpenChange, onSubmit, initialData }: AdminFormModalProps) {
+export function AdminFormModal({ open, onOpenChange, onSubmit, initialData }: Readonly<AdminFormModalProps>) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
