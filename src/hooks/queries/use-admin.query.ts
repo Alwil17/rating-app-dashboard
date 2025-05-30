@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { UserCreate, UserUpdate } from "@/schema/user.schema";
+import { UserCreate, UserUpdate, UserResponse } from "@/schema/user.schema";
 import api from "@/utils/axios";
-import { UserResponse } from "@/schema/user.schema";
 import { adminQueryKeys } from "../useAdminMutations";
 import { toast } from "sonner";
 
@@ -15,6 +14,10 @@ export function useCreateAdminMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: adminQueryKeys.all });
+      toast.success("Admin created successfully");
+    },
+    onError: (error) => {
+      toast.error(`Failed to create admin: ${(error as Error).message}`);
     },
   });
 }
