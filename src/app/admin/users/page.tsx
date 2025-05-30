@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/page-header";
 import { DataTable } from "@/components/ui/datatable";
 import { UserResponse } from "@/schema/user.schema";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/utils/axios";
 import { Loader2 } from "lucide-react";
 import { getUserColumns } from "./components/columns";
@@ -14,10 +14,10 @@ import { AdminFormModal } from "./components/admin-form-modal";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
+    const queryClient = useQueryClient();
     const [adminModalOpen, setAdminModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
     const [editingAdmin, setEditingAdmin] = useState<UserResponse | null>(null);
-
     useEffect(() => {
         setPageTitle('Users Management');
     }, [setPageTitle]);
@@ -41,15 +41,10 @@ export default function AdminUsersPage() {
         setAdminModalOpen(true);
     };
 
-    const handleSubmitAdmin = (data: { name: string; email: string }) => {
-        if (editingAdmin) {
-            console.log('Update user', editingAdmin.id, data);
-            // Make PUT / PATCH request here
-        } else {
-            console.log('Create new admin', data);
-            // Make POST request here
-        }
-        setAdminModalOpen(false);
+
+
+    const handleAdminSuccess = () => {
+        queryClient.invalidateQueries({ queryKey: ['users'] });
     };
 
     if (error) {
@@ -98,6 +93,7 @@ export default function AdminUsersPage() {
                 open={adminModalOpen}
                 onOpenChange={setAdminModalOpen}
                 initialData={editingAdmin}
+                onSuccess={handleAdminSuccess}
             />
         </div>
     );
