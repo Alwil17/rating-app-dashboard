@@ -56,7 +56,7 @@ export function UserDetailsModal({ user, open, onOpenChange }: Readonly<UserDeta
             </div>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-muted-foreground" />
-              <span>Role: <span className="capitalize">{user.role || 'User'}</span></span>
+              <span>Role: <span className="capitalize">{user.role ?? 'User'}</span></span>
             </div>
           </div>
 
