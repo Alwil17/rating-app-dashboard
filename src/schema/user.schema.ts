@@ -12,7 +12,7 @@ export const userUpdateSchema = z.object({
   name: z.string().max(100).optional(),
   email: z.string().email().optional(),
   password: z.string().optional(),
-  role: z.string().optional(),
+  role: z.string().nullable().optional(),
   image_url: z.string().url().nullable().optional(),
 });
 
