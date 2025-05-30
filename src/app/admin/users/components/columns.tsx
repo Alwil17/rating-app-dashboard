@@ -37,7 +37,10 @@ const Actions = ({ user, onViewDetails, onEditUser }: ActionsProps) => {
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
           Copy ID
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
+        {/* Only show if user is not admin */}
+        {user.role === 'user' && (
+          <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
+        )}
         {/* Only show if user is admin */}
         {user.role === 'admin' && (
           <DropdownMenuItem onClick={() => onEditUser(user)}>
