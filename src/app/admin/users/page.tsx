@@ -97,7 +97,6 @@ export default function AdminUsersPage() {
             <AdminFormModal
                 open={adminModalOpen}
                 onOpenChange={setAdminModalOpen}
-                onSubmit={handleSubmitAdmin}
                 initialData={editingAdmin}
             />
         </div>
