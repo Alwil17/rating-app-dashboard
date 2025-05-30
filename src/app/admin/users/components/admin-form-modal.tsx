@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { UserCreate, userCreateSchema, userUpdateSchema, UserResponse, UserUpdate } from '@/schema/user.schema';
 import { useEffect } from 'react';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,7 +37,7 @@ export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<Adm
         defaultValues: {
             name: '',
             email: '',
-            password: '',
+            role: 'admin',
         },
     });
 
@@ -39,22 +46,37 @@ export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<Adm
             form.reset({
                 name: initialData.name,
                 email: initialData.email,
-                password: '', // leave empty for edit
+                role: initialData.role,
             });
         } else {
             form.reset({
                 name: '',
                 email: '',
                 password: '',
+                role: 'admin',
             });
         }
     }, [initialData, form]);
 
     const onSubmit = (data: UserCreate | UserUpdate) => {
-        if (initialData) {
-            updateMutation.mutate(data as UserUpdate);
+        if (isEdit) {
+            updateMutation.mutate(data as UserUpdate, {
+                onSuccess: () => {
+                    onOpenChange(false);
+                },
+            });
         } else {
-            createMutation.mutate(data as UserCreate);
+            createMutation.mutate(data as UserCreate, {
+                onSuccess: () => {
+                    form.reset({
+                        name: '',
+                        email: '',
+                        password: '',
+                        role: 'admin',
+                    });
+                    onOpenChange(false);
+                },
+            });
         }
     };
 
@@ -86,8 +108,29 @@ export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<Adm
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="admin@example.com" type="email" {...field} />
+                                        <Input placeholder="admin@example.com" type="email" {...field} disabled={isEdit} />
                                     </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="role"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Role</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue="admin">
+                                        <FormControl className='w-full'>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Sélctionnez le role" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="admin">Admin</SelectItem>
+                                            <SelectItem value="user">User</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
