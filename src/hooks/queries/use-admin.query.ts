@@ -40,3 +40,20 @@ export function useUpdateAdminMutation(userId: number) {
     },
   });
 }
+
+export const useDeleteUserMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (id: number) => {
+            await api.delete(`/users/${id}`);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+            toast.success("User deleted successfully");
+        },
+        onError: (error) => {
+            toast.error(`Failed to delete user: ${(error as Error).message}`);
+        },
+    });
+};
