@@ -38,12 +38,9 @@ const Actions = ({ user, onViewDetails, onEditUser }: ActionsProps) => {
           Copy ID
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
-        {/* Only show if user is admin */}
-        {user.role === 'admin' && (
-          <DropdownMenuItem onClick={() => onEditUser(user)}>
+        <DropdownMenuItem onClick={() => onEditUser(user)}>
             Edit user
           </DropdownMenuItem>
-        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-destructive">Delete user</DropdownMenuItem>
       </DropdownMenuContent>
