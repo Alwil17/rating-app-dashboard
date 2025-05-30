@@ -4,33 +4,59 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { UserResponse } from '@/schema/user.schema';
+import { UserCreate, userCreateSchema, userUpdateSchema, UserResponse, UserUpdate } from '@/schema/user.schema';
 import { useState, useEffect } from 'react';
-
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreateAdminMutation, useUpdateAdminMutation } from '@/hooks/queries/use-admin.query';
+import { Loader2 } from 'lucide-react';
 interface AdminFormModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onSubmit: (data: { name: string; email: string }) => void;
     initialData?: UserResponse | null;
 }
 
-export function AdminFormModal({ open, onOpenChange, onSubmit, initialData }: Readonly<AdminFormModalProps>) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+export function AdminFormModal({ open, onOpenChange, initialData }: Readonly<AdminFormModalProps>) {
+    const isEdit = !!initialData;
+
+    const createMutation = useCreateAdminMutation();
+    const updateMutation = useUpdateAdminMutation(initialData?.id ?? 0);
+    // Use the appropriate mutation based on whether we're editing or creating
+    // If initialData is provided, we are editing; otherwise, we are creating
+    const mutation = isEdit ? updateMutation : createMutation;
+
+    const form = useForm<UserCreate | UserUpdate>({
+        resolver: zodResolver(isEdit ? userUpdateSchema : userCreateSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            password: '',
+        },
+    });
 
     useEffect(() => {
         if (initialData) {
-            setName(initialData.name);
-            setEmail(initialData.email);
+            form.reset({
+                name: initialData.name,
+                email: initialData.email,
+                password: '', // leave empty for edit
+            });
         } else {
-            setName('');
-            setEmail('');
+            form.reset({
+                name: '',
+                email: '',
+                password: '',
+            });
         }
-    }, [initialData]);
+    }, [initialData, form]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        onSubmit({ name, email });
+    const onSubmit = (data: UserCreate | UserUpdate) => {
+        if (initialData) {
+            updateMutation.mutate(data as UserUpdate);
+        } else {
+            createMutation.mutate(data as UserCreate);
+        }
     };
 
     return (
@@ -39,19 +65,53 @@ export function AdminFormModal({ open, onOpenChange, onSubmit, initialData }: Re
                 <DialogHeader>
                     <DialogTitle>{initialData ? 'Edit Admin' : 'Add New Admin'}</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <Label htmlFor="name">Name</Label>
-                        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-                    </div>
-                    <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                    </div>
-                    <Button type="submit" className="w-full">
-                        {initialData ? 'Update Admin' : 'Create Admin'}
-                    </Button>
-                </form>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Full name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="John Doe" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="admin@example.com" type="email" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input type="password" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit" className="w-full" disabled={mutation.isPending}>
+                            {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            {isEdit ? 'Update Admin' : 'Create Admin'}
+                        </Button>
+                    </form>
+                </Form>
             </DialogContent>
         </Dialog>
     );
