@@ -8,13 +8,20 @@ import { UserResponse } from "@/schema/user.schema";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/utils/axios";
 import { Loader2 } from "lucide-react";
-import { columns } from "./components/columns";
+import { getUserColumns } from "./components/columns";
 import { UserDetailsModal } from "./components/user-details-modal";
+import { AdminFormModal } from "./components/admin-form-modal";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
+    const [adminModalOpen, setAdminModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
-    
+    const [editingAdmin, setEditingAdmin] = useState<UserResponse | null>(null);
+
+    useEffect(() => {
+        setPageTitle('Users Management');
+    }, [setPageTitle]);
+
     const { data: users, isLoading, error } = useQuery<UserResponse[]>({
         queryKey: ['users'],
         queryFn: async () => {
@@ -23,9 +30,27 @@ export default function AdminUsersPage() {
         }
     });
 
-    useEffect(() => {
-        setPageTitle('Users Management');
-    }, [setPageTitle]);
+    // Modal handlers
+    const handleAddNew = () => {
+        setEditingAdmin(null);
+        setAdminModalOpen(true);
+    };
+
+    const handleEditUser = (user: UserResponse) => {
+        setEditingAdmin(user);
+        setAdminModalOpen(true);
+    };
+
+    const handleSubmitAdmin = (data: { name: string; email: string }) => {
+        if (editingAdmin) {
+            console.log('Update user', editingAdmin.id, data);
+            // Make PUT / PATCH request here
+        } else {
+            console.log('Create new admin', data);
+            // Make POST request here
+        }
+        setAdminModalOpen(false);
+    };
 
     if (error) {
         return (
@@ -43,18 +68,18 @@ export default function AdminUsersPage() {
                 subtitle="Manage and organize your users"
                 action={{
                     label: "Add new admin",
-                    onClick: () => console.log("Add user clicked"),
+                    onClick: handleAddNew,
                 }}
             />
-            
+
             <div className="container mx-auto py-10">
                 {isLoading ? (
                     <div className="flex justify-center items-center h-64">
                         <Loader2 className="h-8 w-8 animate-spin" />
                     </div>
                 ) : (
-                    <DataTable 
-                        columns={columns} 
+                    <DataTable
+                        columns={getUserColumns((user) => setSelectedUser(user), handleEditUser)}
                         data={users || []}
                         meta={{
                             onViewDetails: (user: UserResponse) => setSelectedUser(user)
@@ -63,10 +88,17 @@ export default function AdminUsersPage() {
                 )}
             </div>
 
-            <UserDetailsModal 
+            <UserDetailsModal
                 user={selectedUser}
                 open={!!selectedUser}
                 onOpenChange={(open) => !open && setSelectedUser(null)}
+            />
+
+            <AdminFormModal
+                open={adminModalOpen}
+                onOpenChange={setAdminModalOpen}
+                onSubmit={handleSubmitAdmin}
+                initialData={editingAdmin}
             />
         </div>
     );
