@@ -41,9 +41,7 @@ export const useCreateCategoryMutation = () => {
 
   return useMutation({
     mutationFn: async (newCategory: CategoryCreate) => {
-      const response = await api.post<Category>('/categories', null, {
-        params: newCategory
-      });
+      const response = await api.post<Category>('/categories', newCategory);
       return response.data;
     },
     onSuccess: () => {
