@@ -9,6 +9,7 @@ export const routes = {
   admin: {
     home: '/admin',
     users: '/admin/users',
+    categories: '/admin/categories',
     profile: '/admin/profile',
     settings: '/admin/settings',
     ratings: '/admin/ratings',

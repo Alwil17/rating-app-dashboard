@@ -40,6 +40,11 @@ export const mainNavigation: NavMenuGroup[] = [
         icon: Users,
       },
       {
+        title: "Catégories",
+        url: routes.admin.categories,
+        icon: List,
+      },
+      {
         title: "Statistiques",
         url: routes.admin.ratings,
         icon: BarChart3,
