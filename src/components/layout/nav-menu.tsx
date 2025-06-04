@@ -10,6 +10,7 @@ import {
   Star,
   Settings,
   UserCircle,
+  List,
 } from 'lucide-react';
 
 const navItems = [
@@ -22,6 +23,11 @@ const navItems = [
     href: routes.admin.users,
     label: 'Users',
     icon: Users,
+  },
+  {
+    href: routes.admin.categories,
+    label: 'Categories',
+    icon: List,
   },
   {
     href: routes.admin.ratings,
