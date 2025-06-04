@@ -1,10 +1,21 @@
 "use client"
 
-import { UserResponse } from "@/schema/user.schema"
-import { ColumnDef } from "@tanstack/react-table"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Shield } from "lucide-react"
+import { UserResponse } from "@/schema/user.schema";
+import { ColumnDef } from "@tanstack/react-table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal, Shield } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,16 +23,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { DataTableColumnHeader } from "@/components/ui/datatable-column-header"
+} from "@/components/ui/dropdown-menu";
+import { DataTableColumnHeader } from "@/components/ui/datatable-column-header";
 
 interface ActionsProps {
   user: UserResponse
   onViewDetails: (user: UserResponse) => void,
-  onEditUser: (user: UserResponse) => void
+  onEditUser: (user: UserResponse) => void,
+  onDeleteUser: (user: UserResponse) => void
 }
 
-const Actions = ({ user, onViewDetails, onEditUser }: ActionsProps) => {
+const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps) => {
 
   return (
     <DropdownMenu>
@@ -48,7 +60,25 @@ const Actions = ({ user, onViewDetails, onEditUser }: ActionsProps) => {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive">Delete user</DropdownMenuItem>
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive">
+                Supprimer
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                <AlertDialogAction onClick={() => onDeleteUser(user)}>Confirmer</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -56,7 +86,8 @@ const Actions = ({ user, onViewDetails, onEditUser }: ActionsProps) => {
 
 export function getUserColumns(
   onViewDetails: (user: UserResponse) => void,
-  onEditUser: (user: UserResponse) => void
+  onEditUser: (user: UserResponse) => void,
+  onDeleteUser: (user: UserResponse) => void
 ): ColumnDef<UserResponse>[] {
 
   return [
@@ -117,7 +148,7 @@ export function getUserColumns(
         // @ts-ignore - Custom table meta
         const { onViewDetails } = table.options.meta || {}
 
-        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} />
+        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} />
       },
     },
   ];
