@@ -11,6 +11,8 @@ import { Loader2 } from "lucide-react";
 import { getUserColumns } from "./components/columns";
 import { UserDetailsModal } from "./components/user-details-modal";
 import { AdminFormModal } from "./components/admin-form-modal";
+import { toast } from "sonner";
+import { useDeleteUserMutation } from "@/hooks/queries/use-admin.query";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
@@ -18,6 +20,8 @@ export default function AdminUsersPage() {
     const [adminModalOpen, setAdminModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
     const [editingAdmin, setEditingAdmin] = useState<UserResponse | null>(null);
+    const deleteMutation = useDeleteUserMutation();
+
     useEffect(() => {
         setPageTitle('Users Management');
     }, [setPageTitle]);
@@ -41,7 +45,19 @@ export default function AdminUsersPage() {
         setAdminModalOpen(true);
     };
 
-
+    const handleDeleteUser = (user: UserResponse) => {
+        deleteMutation.mutate(user.id, {
+            onSuccess: () => {
+                toast.success(`${user.name} has been deleted successfully`);
+                queryClient.invalidateQueries({ queryKey: ['users'] });
+                setSelectedUser(null);
+            },
+            onError: () => {
+                queryClient.invalidateQueries({ queryKey: ['users'] });
+                setSelectedUser(null);
+            },
+        });
+    };
 
     const handleAdminSuccess = () => {
         queryClient.invalidateQueries({ queryKey: ['users'] });
@@ -74,7 +90,7 @@ export default function AdminUsersPage() {
                     </div>
                 ) : (
                     <DataTable
-                        columns={getUserColumns((user) => setSelectedUser(user), handleEditUser)}
+                        columns={getUserColumns((user) => setSelectedUser(user), handleEditUser, handleDeleteUser)}
                         data={users || []}
                         meta={{
                             onViewDetails: (user: UserResponse) => setSelectedUser(user)
