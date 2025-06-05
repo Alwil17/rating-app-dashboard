@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Rating, RatingCreate, RatingUpdate } from "@/schema/rating.schema";
+import { Rating } from "@/schema/rating.schema";
 import api from "@/utils/axios";
 import { toast } from "sonner";
 
@@ -61,57 +61,13 @@ export const useUserRatings = (userId: number) => {
   });
 };
 
-// Create a rating
-export const useCreateRatingMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (newRating: RatingCreate) => {
-      const response = await api.post<Rating>('/ratings', newRating);
-      return response.data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ratingKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: ratingKeys.byItem(data.item_id) });
-      queryClient.invalidateQueries({ queryKey: ratingKeys.byUser(data.user_id) });
-      toast.success('Rating created successfully');
-    },
-    onError: (error) => {
-      toast.error(`Failed to create rating: ${(error as Error).message}`);
-    }
-  });
-};
-
-// Update a rating
-export const useUpdateRatingMutation = (id: number) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({ ratingUpdate, rating }: { ratingUpdate: RatingUpdate, rating: Rating }) => {
-      const response = await api.put<Rating>(`/ratings/${id}`, ratingUpdate);
-      return { response: response.data, originalRating: rating };
-    },
-    onSuccess: (data) => {
-      const { response, originalRating } = data;
-      queryClient.invalidateQueries({ queryKey: ratingKeys.detail(id) });
-      queryClient.invalidateQueries({ queryKey: ratingKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: ratingKeys.byItem(originalRating.item_id) });
-      queryClient.invalidateQueries({ queryKey: ratingKeys.byUser(originalRating.user_id) });
-      toast.success('Rating updated successfully');
-    },
-    onError: (error) => {
-      toast.error(`Failed to update rating: ${(error as Error).message}`);
-    }
-  });
-};
-
 // Delete a rating
 export const useDeleteRatingMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (rating: Rating) => {
-      await api.delete(`/ratings/${rating.id}`);
+      await api.delete(`/ratings/${rating.id}/comment`);
       return rating; // Return rating to use in onSuccess
     },
     onSuccess: (rating) => {
