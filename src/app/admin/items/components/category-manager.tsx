@@ -30,7 +30,7 @@ export function CategoryManager({
   onOpenChange,
   item,
   onSuccess,
-}: CategoryManagerProps) {
+}: Readonly<CategoryManagerProps>) {
   const { data: categories, isLoading: loadingCategories } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const updateMutation = useUpdateItemCategoriesMutation(item?.id || 0);
