@@ -157,6 +157,31 @@ export function getItemColumns(
             },
         },
         {
+            accessorKey: "tags",
+            header: ({ column }) => (
+                <DataTableColumnHeader column={column} title="Tags" />
+            ),
+            cell: ({ row }) => {
+                const tags = row.getValue("tags") as ItemResponse["tags"]
+                return (
+                    <div className="flex flex-wrap gap-1 max-w-[200px]">
+                        {tags.length > 0 ? (
+                            tags.slice(0, 3).map((tag) => (
+                                <Badge key={tag.id} variant="outline">
+                                    {tag.name}
+                                </Badge>
+                            ))
+                        ) : (
+                            <span className="text-muted-foreground text-sm">None</span>
+                        )}
+                        {tags.length > 3 && (
+                            <Badge variant="outline">+{tags.length - 3} more</Badge>
+                        )}
+                    </div>
+                )
+            },
+        },
+        {
             accessorKey: "avg_rating",
             header: ({ column }) => (
                 <DataTableColumnHeader column={column} title="Rating" />
