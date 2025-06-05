@@ -7,7 +7,7 @@ import { DataTable } from "@/components/ui/datatable";
 import { ItemResponse } from "@/schema/item.schema";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/utils/axios";
-import { Package, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { getItemColumns } from "./components/columns";
 import { ItemForm } from "./components/item-form";
 import { ItemDetails } from "./components/item-details";
