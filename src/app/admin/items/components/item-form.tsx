@@ -44,7 +44,7 @@ export function ItemForm({
   onOpenChange,
   initialData,
   onSuccess,
-}: ItemFormProps) {
+}: Readonly<ItemFormProps>) {
   const isEditing = !!initialData;
   
   const createMutation = useCreateItemMutation();
