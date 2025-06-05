@@ -44,11 +44,10 @@ const RatingStars = ({ value }: { value: number }) => {
 interface ActionsProps {
   rating: Rating
   onViewDetails: (rating: Rating) => void,
-  onEditRating: (rating: Rating) => void,
   onDeleteRating: (rating: Rating) => void
 }
 
-const Actions = ({ rating, onViewDetails, onEditRating, onDeleteRating }: ActionsProps) => {
+const Actions = ({ rating, onViewDetails, onDeleteRating }: ActionsProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -63,21 +62,18 @@ const Actions = ({ rating, onViewDetails, onEditRating, onDeleteRating }: Action
         <DropdownMenuItem onClick={() => onViewDetails(rating)}>
           View details
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onEditRating(rating)}>
-          Edit rating
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive">
-              Delete
+              Delete comment
             </DropdownMenuItem>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the rating.
+                This action is only for moderation. This will remove the rating comment.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -93,7 +89,6 @@ const Actions = ({ rating, onViewDetails, onEditRating, onDeleteRating }: Action
 
 export function getRatingColumns(
   onViewDetails: (rating: Rating) => void,
-  onEditRating: (rating: Rating) => void,
   onDeleteRating: (rating: Rating) => void
 ): ColumnDef<Rating>[] {
   return [
@@ -173,7 +168,6 @@ export function getRatingColumns(
         return <Actions 
           rating={rating} 
           onViewDetails={onViewDetails} 
-          onEditRating={onEditRating} 
           onDeleteRating={onDeleteRating} 
         />;
       },
