@@ -10,13 +10,18 @@ import { Loader2 } from "lucide-react";
 import { getRatingColumns } from "./components/columns";
 import { useRatings, useDeleteRatingMutation } from "@/hooks/queries/use-rating.query";
 import { RatingDetails } from "./components/rating-details";
-import { Star } from "lucide-react";
+import { ItemDetailsModal } from "./components/item-details-modal";
+import { UserDetailsModal } from "./components/user-details-modal";
 
 export default function AdminRatingsPage() {
     const { setPageTitle } = useBreadcrumb();
     const queryClient = useQueryClient();
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
     const [detailsOpen, setDetailsOpen] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+    const [itemModalOpen, setItemModalOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+    const [userModalOpen, setUserModalOpen] = useState(false);
     
     const { data: ratings, isLoading, error } = useRatings();
     const deleteMutation = useDeleteRatingMutation();
@@ -30,6 +35,16 @@ export default function AdminRatingsPage() {
     const handleViewDetails = (rating: Rating) => {
         setSelectedRating(rating);
         setDetailsOpen(true);
+    };
+
+    const handleViewItem = (itemId: number) => {
+        setSelectedItemId(itemId);
+        setItemModalOpen(true);
+    };
+
+    const handleViewUser = (userId: number) => {
+        setSelectedUserId(userId);
+        setUserModalOpen(true);
     };
 
     const handleDeleteRating = (rating: Rating) => {
@@ -65,6 +80,8 @@ export default function AdminRatingsPage() {
                     <DataTable
                         columns={getRatingColumns(
                             handleViewDetails,
+                            handleViewItem,
+                            handleViewUser,
                             handleDeleteRating
                         )}
                         data={ratings || []}
@@ -76,6 +93,20 @@ export default function AdminRatingsPage() {
                 rating={selectedRating}
                 open={detailsOpen}
                 onOpenChange={setDetailsOpen}
+                onViewItem={handleViewItem}
+                onViewUser={handleViewUser}
+            />
+
+            <ItemDetailsModal
+                itemId={selectedItemId}
+                open={itemModalOpen}
+                onOpenChange={setItemModalOpen}
+            />
+
+            <UserDetailsModal
+                userId={selectedUserId}
+                open={userModalOpen}
+                onOpenChange={setUserModalOpen}
             />
         </div>
     );
