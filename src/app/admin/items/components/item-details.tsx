@@ -13,7 +13,7 @@ type ItemDetailsProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-export function ItemDetails({ item, open, onOpenChange }: ItemDetailsProps) {
+export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsProps>) {
   if (!item) return null;
 
   return (
