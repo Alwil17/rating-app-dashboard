@@ -10,17 +10,22 @@ import {
 import { format } from "date-fns";
 import { Star, User, Package, Calendar, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 type RatingDetailsProps = {
   rating: Rating | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onViewItem: (itemId: number) => void;
+  onViewUser: (userId: number) => void;
 };
 
-export function RatingDetails({ rating, open, onOpenChange }: RatingDetailsProps) {
-  const router = useRouter();
-  
+export function RatingDetails({ 
+  rating, 
+  open, 
+  onOpenChange,
+  onViewItem,
+  onViewUser
+}: RatingDetailsProps) {
   if (!rating) return null;
 
   const renderStars = (value: number) => {
@@ -73,7 +78,7 @@ export function RatingDetails({ rating, open, onOpenChange }: RatingDetailsProps
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={() => router.push(`/admin/items/${rating.item_id}`)}
+                onClick={() => onViewItem(rating.item_id)}
               >
                 View Item
               </Button>
@@ -90,7 +95,7 @@ export function RatingDetails({ rating, open, onOpenChange }: RatingDetailsProps
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={() => router.push(`/admin/users/${rating.user_id}`)}
+                onClick={() => onViewUser(rating.user_id)}
               >
                 View User
               </Button>
