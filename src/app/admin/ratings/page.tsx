@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { getRatingColumns } from "./components/columns";
 import { useRatings, useDeleteRatingMutation } from "@/hooks/queries/use-rating.query";
 import { RatingDetails } from "./components/rating-details";
+import { Star } from "lucide-react";
 
 export default function AdminRatingsPage() {
     const { setPageTitle } = useBreadcrumb();
