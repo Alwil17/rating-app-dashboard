@@ -1,17 +1,19 @@
 "use client"
 
+import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -20,56 +22,94 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "./button"
-import React from "react"
-import { Input } from "./input"
+import { SearchIcon } from "lucide-react"
 import { DataTablePagination } from "./datatable-pagination"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[],
-  meta?: Record<string, any>
+  data: TData[]
+  meta?: any
+  searchColumn?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  meta = {},
-  // meta can include additional properties like onViewDetails, etc.
+  meta,
+  searchColumn,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
-  
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = React.useState({})
+
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    meta,
     state: {
       sorting,
-      columnFilters
+      columnFilters,
+      columnVisibility,
+      rowSelection,
     },
-    meta,
   })
 
+  // Determine which column to search in
+  const getSearchColumn = () => {
+    if (searchColumn) return searchColumn
+
+    // Try to find a text-based column to search in
+    const textColumns = [
+      "name",
+      "email",
+      "title",
+      "description",
+      "comment",
+    ]
+
+    for (const col of textColumns) {
+      if (table.getAllColumns().some((column) => column.id === col)) {
+        return col
+      }
+    }
+
+    // Default to first column if no suitable column is found
+    const firstColumn = table.getAllColumns()[0]
+    return firstColumn ? firstColumn.id : ""
+  }
+
+  const searchColumnId = getSearchColumn()
+
   return (
-    <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter items..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
+    <div className="space-y-4">
+      {/* Search Filter */}
+      {searchColumnId && (
+        <div className="flex items-center">
+          <SearchIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder={`Search by ${searchColumnId}...`}
+            value={(table.getColumn(searchColumnId)?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn(searchColumnId)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+      )}
+
+      {/* Table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -114,10 +154,10 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      {/* Pagination */}
       <div className="my-4">
         <DataTablePagination table={table} />
       </div>
     </div>
-
   )
 }
