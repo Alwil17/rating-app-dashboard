@@ -21,7 +21,7 @@ export default function AdmincategoriesPage() {
     const deleteMutation = useDeleteCategoryMutation();
 
     useEffect(() => {
-        setPageTitle('categories Management');
+        setPageTitle('Categories Management');
     }, [setPageTitle]);
 
     const { data: categories, isLoading, error } = useQuery<Category[]>({
