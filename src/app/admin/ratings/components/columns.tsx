@@ -3,7 +3,7 @@
 import { Rating } from "@/schema/rating.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Star, User, Package, Calendar, Link } from "lucide-react";
+import { MoreHorizontal, Star, User, Package, Calendar } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -89,6 +89,8 @@ const Actions = ({ rating, onViewDetails, onDeleteRating }: ActionsProps) => {
 
 export function getRatingColumns(
   onViewDetails: (rating: Rating) => void,
+  onViewItem: (itemId: number) => void,
+  onViewUser: (userId: number) => void,
   onDeleteRating: (rating: Rating) => void
 ): ColumnDef<Rating>[] {
   return [
@@ -102,13 +104,13 @@ export function getRatingColumns(
         return (
           <div className="flex items-center gap-2">
             <Package className="h-4 w-4 text-muted-foreground" />
-            <a 
-              href={`/admin/items/${itemId}`}
-              className="flex items-center hover:underline text-primary"
+            <Button 
+              variant="link" 
+              className="p-0 h-auto font-normal"
+              onClick={() => onViewItem(itemId)}
             >
               Item #{itemId}
-              <Link className="ml-1 h-3 w-3" />
-            </a>
+            </Button>
           </div>
         );
       },
@@ -123,13 +125,13 @@ export function getRatingColumns(
         return (
           <div className="flex items-center gap-2">
             <User className="h-4 w-4 text-muted-foreground" />
-            <a 
-              href={`/admin/users/${userId}`}
-              className="flex items-center hover:underline text-primary"
+            <Button 
+              variant="link" 
+              className="p-0 h-auto font-normal"
+              onClick={() => onViewUser(userId)}
             >
               User #{userId}
-              <Link className="ml-1 h-3 w-3" />
-            </a>
+            </Button>
           </div>
         );
       },
