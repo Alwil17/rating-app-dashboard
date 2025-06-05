@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { format } from "date-fns";
 import { Star, User, Package, Calendar, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type RatingDetailsProps = {
   rating: Rating | null;
@@ -16,7 +18,9 @@ type RatingDetailsProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-export function RatingDetails({ rating, open, onOpenChange }: Readonly<RatingDetailsProps>) {
+export function RatingDetails({ rating, open, onOpenChange }: RatingDetailsProps) {
+  const router = useRouter();
+  
   if (!rating) return null;
 
   const renderStars = (value: number) => {
@@ -64,7 +68,16 @@ export function RatingDetails({ rating, open, onOpenChange }: Readonly<RatingDet
               <Package className="h-4 w-4" />
               Item
             </div>
-            <div>#{rating.item_id}</div>
+            <div className="flex items-center gap-2">
+              <span>#{rating.item_id}</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => router.push(`/admin/items/${rating.item_id}`)}
+              >
+                View Item
+              </Button>
+            </div>
           </div>
           
           <div className="grid grid-cols-[25%_75%] items-start gap-4">
@@ -72,7 +85,16 @@ export function RatingDetails({ rating, open, onOpenChange }: Readonly<RatingDet
               <User className="h-4 w-4" />
               User
             </div>
-            <div>#{rating.user_id}</div>
+            <div className="flex items-center gap-2">
+              <span>#{rating.user_id}</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => router.push(`/admin/users/${rating.user_id}`)}
+              >
+                View User
+              </Button>
+            </div>
           </div>
           
           <div className="grid grid-cols-[25%_75%] items-start gap-4">
