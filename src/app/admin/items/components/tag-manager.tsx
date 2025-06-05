@@ -27,7 +27,7 @@ export function TagManager({
   onOpenChange,
   item,
   onSuccess,
-}: TagManagerProps) {
+}: Readonly<TagManagerProps>) {
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const updateMutation = useUpdateItemTagsMutation(item?.id || 0);
