@@ -8,15 +8,12 @@ import { Rating } from "@/schema/rating.schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { getRatingColumns } from "./components/columns";
-import { toast } from "sonner";
 import { useRatings, useDeleteRatingMutation } from "@/hooks/queries/use-rating.query";
 import { RatingDetails } from "./components/rating-details";
-import { RatingForm } from "./components/rating-form";
 
 export default function AdminRatingsPage() {
     const { setPageTitle } = useBreadcrumb();
     const queryClient = useQueryClient();
-    const [formOpen, setFormOpen] = useState(false);
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
     const [detailsOpen, setDetailsOpen] = useState(false);
     
@@ -28,15 +25,6 @@ export default function AdminRatingsPage() {
     }, [setPageTitle]);
 
     // Action handlers
-    const handleAddNew = () => {
-        setSelectedRating(null);
-        setFormOpen(true);
-    };
-
-    const handleEditRating = (rating: Rating) => {
-        setSelectedRating(rating);
-        setFormOpen(true);
-    };
 
     const handleViewDetails = (rating: Rating) => {
         setSelectedRating(rating);
@@ -65,10 +53,6 @@ export default function AdminRatingsPage() {
             <PageHeader
                 title="Ratings Management"
                 subtitle="View and manage user ratings"
-                action={{
-                    label: "Add Rating",
-                    onClick: handleAddNew,
-                }}
             />
 
             <div className="container mx-auto py-10">
@@ -79,8 +63,7 @@ export default function AdminRatingsPage() {
                 ) : (
                     <DataTable
                         columns={getRatingColumns(
-                            handleViewDetails, 
-                            handleEditRating, 
+                            handleViewDetails,
                             handleDeleteRating
                         )}
                         data={ratings || []}
@@ -92,13 +75,6 @@ export default function AdminRatingsPage() {
                 rating={selectedRating}
                 open={detailsOpen}
                 onOpenChange={setDetailsOpen}
-            />
-
-            <RatingForm
-                open={formOpen}
-                onOpenChange={setFormOpen}
-                initialData={selectedRating}
-                onSuccess={handleSuccess}
             />
         </div>
     );
