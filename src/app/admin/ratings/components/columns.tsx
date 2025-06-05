@@ -3,7 +3,7 @@
 import { Rating } from "@/schema/rating.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Star, User, Package, Calendar } from "lucide-react";
+import { MoreHorizontal, Star, User, Package, Calendar, Link } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -102,7 +102,13 @@ export function getRatingColumns(
         return (
           <div className="flex items-center gap-2">
             <Package className="h-4 w-4 text-muted-foreground" />
-            <span>Item #{itemId}</span>
+            <a 
+              href={`/admin/items/${itemId}`}
+              className="flex items-center hover:underline text-primary"
+            >
+              Item #{itemId}
+              <Link className="ml-1 h-3 w-3" />
+            </a>
           </div>
         );
       },
@@ -117,7 +123,13 @@ export function getRatingColumns(
         return (
           <div className="flex items-center gap-2">
             <User className="h-4 w-4 text-muted-foreground" />
-            <span>User #{userId}</span>
+            <a 
+              href={`/admin/users/${userId}`}
+              className="flex items-center hover:underline text-primary"
+            >
+              User #{userId}
+              <Link className="ml-1 h-3 w-3" />
+            </a>
           </div>
         );
       },
