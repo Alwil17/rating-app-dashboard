@@ -10,6 +10,7 @@ export const routes = {
     home: '/admin',
     users: '/admin/users',
     categories: '/admin/categories',
+    tags: '/admin/tags',
     profile: '/admin/profile',
     settings: '/admin/settings',
     ratings: '/admin/ratings',

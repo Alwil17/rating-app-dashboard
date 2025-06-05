@@ -45,6 +45,11 @@ export const mainNavigation: NavMenuGroup[] = [
         icon: List,
       },
       {
+        title: "Tags",
+        url: routes.admin.tags,
+        icon: List,
+      },
+      {
         title: "Statistiques",
         url: routes.admin.ratings,
         icon: BarChart3,
