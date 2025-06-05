@@ -4,7 +4,6 @@ import {
   Star,
   Settings,
   UserCircle,
-  BarChart3,
   List,
 } from 'lucide-react';
 import { routes } from './routes';
@@ -40,6 +39,11 @@ export const mainNavigation: NavMenuGroup[] = [
         icon: Users,
       },
       {
+        title: "Évaluations",
+        url: routes.admin.ratings,
+        icon: Star,
+      },
+      {
         title: "Catégories",
         url: routes.admin.categories,
         icon: List,
@@ -48,17 +52,7 @@ export const mainNavigation: NavMenuGroup[] = [
         title: "Tags",
         url: routes.admin.tags,
         icon: List,
-      },
-      {
-        title: "Statistiques",
-        url: routes.admin.ratings,
-        icon: BarChart3,
-      },
-      {
-        title: "Évaluations",
-        url: routes.admin.ratings,
-        icon: Star,
-      },
+      }
     ],
   },
   {
