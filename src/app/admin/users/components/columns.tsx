@@ -4,7 +4,7 @@ import { UserResponse } from "@/schema/user.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Shield } from "lucide-react";
+import { MoreHorizontal, Shield, KeyRound } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,10 +30,17 @@ interface ActionsProps {
   user: UserResponse
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
-  onDeleteUser: (user: UserResponse) => void
+  onDeleteUser: (user: UserResponse) => void,
+  onResetPassword: (user: UserResponse) => void
 }
 
-const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps) => {
+const Actions = ({ 
+  user, 
+  onViewDetails, 
+  onEditUser, 
+  onDeleteUser,
+  onResetPassword 
+}: ActionsProps) => {
 
   return (
     <DropdownMenu>
@@ -56,6 +63,13 @@ const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps
             Edit user
           </DropdownMenuItem>
         )}
+        
+        {/* Reset password option */}
+        <DropdownMenuItem onClick={() => onResetPassword(user)}>
+          <KeyRound className="h-4 w-4 mr-2" />
+          Reset password
+        </DropdownMenuItem>
+        
         <DropdownMenuSeparator />
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -84,7 +98,8 @@ const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps
 export function getUserColumns(
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
-  onDeleteUser: (user: UserResponse) => void
+  onDeleteUser: (user: UserResponse) => void,
+  onResetPassword: (user: UserResponse) => void
 ): ColumnDef<UserResponse>[] {
 
   return [
@@ -143,7 +158,7 @@ export function getUserColumns(
       cell: ({ row }) => {
         const user = row.original
 
-        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} />
+        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} onResetPassword={onResetPassword} />
       },
     },
   ];
