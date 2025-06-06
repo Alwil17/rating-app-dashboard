@@ -57,3 +57,30 @@ export const useDeleteUserMutation = () => {
         },
     });
 };
+
+export const useResetPasswordMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (userId: number) => {
+            // Generate a random temporary password
+            const tempPassword = Math.random().toString(36).slice(-8);
+            
+            const response = await api.put<{password: string}>(`/users/${userId}/reset-password`, {
+                password: tempPassword
+            });
+            
+            return {
+                userId,
+                tempPassword
+            };
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+            toast.success(`Password has been reset successfully`);
+        },
+        onError: (error) => {
+            toast.error(`Failed to reset password: ${(error as Error).message}`);
+        },
+    });
+};
