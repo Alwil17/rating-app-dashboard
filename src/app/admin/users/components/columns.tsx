@@ -65,10 +65,12 @@ const Actions = ({
         )}
         
         {/* Reset password option */}
-        <DropdownMenuItem onClick={() => onResetPassword(user)}>
+        {user.role === 'user' && (
+          <DropdownMenuItem onClick={() => onResetPassword(user)}>
           <KeyRound className="h-4 w-4 mr-2" />
           Reset password
         </DropdownMenuItem>
+        )}
         
         <DropdownMenuSeparator />
         <AlertDialog>
