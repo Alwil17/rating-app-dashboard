@@ -92,9 +92,6 @@ export default function AdminUsersPage() {
                     <DataTable
                         columns={getUserColumns((user) => setSelectedUser(user), handleEditUser, handleDeleteUser)}
                         data={users || []}
-                        meta={{
-                            onViewDetails: (user: UserResponse) => setSelectedUser(user)
-                        }}
                     />
                 )}
             </div>
