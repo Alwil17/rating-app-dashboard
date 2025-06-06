@@ -75,7 +75,10 @@ export default function AdminUsersPage() {
         if (resetPasswordUser) {
             resetPasswordMutation.mutate(resetPasswordUser.id, {
                 onSuccess: (data) => {
+                    console.log("Received temporary password:", data.tempPassword);
                     setTempPassword(data.tempPassword);
+                    // Make sure the modal stays open
+                    setResetPasswordOpen(true);
                 },
             });
         }
