@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserResponse } from "@/schema/user.schema";
 import { Clipboard, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 interface ResetPasswordDialogProps {
@@ -34,6 +34,12 @@ export function ResetPasswordDialog({
 }: Readonly<ResetPasswordDialogProps>) {
   const [copied, setCopied] = useState(false);
 
+  // Debug logging to help troubleshoot
+  useEffect(() => {
+    console.log("Dialog open:", open);
+    console.log("tempPassword:", tempPassword);
+  }, [open, tempPassword]);
+
   const copyToClipboard = () => {
     if (tempPassword) {
       navigator.clipboard.writeText(tempPassword);
@@ -44,7 +50,12 @@ export function ResetPasswordDialog({
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={(newState) => {
+      // Only close if we're showing the password already or user is canceling
+      if (!newState || tempPassword) {
+        onOpenChange(newState);
+      }
+    }}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
@@ -52,7 +63,7 @@ export function ResetPasswordDialog({
           </AlertDialogTitle>
           <AlertDialogDescription>
             {tempPassword
-              ? "A temporary password has been generated. You should share this with the user."
+              ? "A temporary password has been generated. Please share this with the user."
               : "This will reset the user's password to a temporary one. They will need to change it on their next login."}
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -63,6 +74,7 @@ export function ResetPasswordDialog({
               value={tempPassword}
               readOnly
               className="font-mono"
+              data-testid="temp-password-input"
             />
             <Button
               variant="outline"
@@ -75,7 +87,9 @@ export function ResetPasswordDialog({
         )}
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>
+            {tempPassword ? "Close" : "Cancel"}
+          </AlertDialogCancel>
           {!tempPassword && (
             <AlertDialogAction
               onClick={onConfirm}
