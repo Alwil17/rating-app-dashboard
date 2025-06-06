@@ -12,7 +12,8 @@ import { getUserColumns } from "./components/columns";
 import { UserDetailsModal } from "./components/user-details-modal";
 import { AdminFormModal } from "./components/admin-form-modal";
 import { toast } from "sonner";
-import { useDeleteUserMutation } from "@/hooks/queries/use-admin.query";
+import { useDeleteUserMutation, useResetPasswordMutation } from "@/hooks/queries/use-admin.query";
+import { ResetPasswordDialog } from "./components/reset-password-dialog";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
@@ -20,7 +21,12 @@ export default function AdminUsersPage() {
     const [adminModalOpen, setAdminModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
     const [editingAdmin, setEditingAdmin] = useState<UserResponse | null>(null);
+    const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
+    const [resetPasswordUser, setResetPasswordUser] = useState<UserResponse | null>(null);
+    const [tempPassword, setTempPassword] = useState<string | null>(null);
+    
     const deleteMutation = useDeleteUserMutation();
+    const resetPasswordMutation = useResetPasswordMutation();
 
     useEffect(() => {
         setPageTitle('Users Management');
@@ -59,6 +65,22 @@ export default function AdminUsersPage() {
         });
     };
 
+    const handleResetPassword = (user: UserResponse) => {
+        setResetPasswordUser(user);
+        setTempPassword(null);
+        setResetPasswordOpen(true);
+    };
+
+    const confirmResetPassword = () => {
+        if (resetPasswordUser) {
+            resetPasswordMutation.mutate(resetPasswordUser.id, {
+                onSuccess: (data) => {
+                    setTempPassword(data.tempPassword);
+                },
+            });
+        }
+    };
+
     const handleAdminSuccess = () => {
         queryClient.invalidateQueries({ queryKey: ['users'] });
     };
@@ -90,7 +112,12 @@ export default function AdminUsersPage() {
                     </div>
                 ) : (
                     <DataTable
-                        columns={getUserColumns((user) => setSelectedUser(user), handleEditUser, handleDeleteUser)}
+                        columns={getUserColumns(
+                            (user) => setSelectedUser(user),
+                            handleEditUser,
+                            handleDeleteUser,
+                            handleResetPassword
+                        )}
                         data={users || []}
                     />
                 )}
@@ -107,6 +134,15 @@ export default function AdminUsersPage() {
                 onOpenChange={setAdminModalOpen}
                 initialData={editingAdmin}
                 onSuccess={handleAdminSuccess}
+            />
+
+            <ResetPasswordDialog
+                open={resetPasswordOpen}
+                onOpenChange={setResetPasswordOpen}
+                user={resetPasswordUser}
+                isLoading={resetPasswordMutation.isPending}
+                tempPassword={tempPassword}
+                onConfirm={confirmResetPassword}
             />
         </div>
     );
