@@ -28,14 +28,12 @@ import { DataTablePagination } from "./datatable-pagination"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  meta?: any
   searchColumn?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  meta,
   searchColumn,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -57,7 +55,6 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    meta,
     state: {
       sorting,
       columnFilters,

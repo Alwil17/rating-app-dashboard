@@ -4,7 +4,7 @@ import { UserResponse } from "@/schema/user.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Shield } from "lucide-react";
+import { MoreHorizontal, Shield, KeyRound } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,10 +30,17 @@ interface ActionsProps {
   user: UserResponse
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
-  onDeleteUser: (user: UserResponse) => void
+  onDeleteUser: (user: UserResponse) => void,
+  onResetPassword: (user: UserResponse) => void
 }
 
-const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps) => {
+const Actions = ({ 
+  user, 
+  onViewDetails, 
+  onEditUser, 
+  onDeleteUser,
+  onResetPassword 
+}: ActionsProps) => {
 
   return (
     <DropdownMenu>
@@ -49,16 +56,22 @@ const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
           Copy ID
         </DropdownMenuItem>
-        {/* Only show if user is not admin */}
-        {user.role === 'user' && (
-          <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
-        )}
+        <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
         {/* Only show if user is admin */}
         {user.role === 'admin' && (
           <DropdownMenuItem onClick={() => onEditUser(user)}>
             Edit user
           </DropdownMenuItem>
         )}
+        
+        {/* Reset password option */}
+        {user.role === 'user' && (
+          <DropdownMenuItem onClick={() => onResetPassword(user)}>
+          <KeyRound className="h-4 w-4 mr-2" />
+          Reset password
+        </DropdownMenuItem>
+        )}
+        
         <DropdownMenuSeparator />
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -87,7 +100,8 @@ const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps
 export function getUserColumns(
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
-  onDeleteUser: (user: UserResponse) => void
+  onDeleteUser: (user: UserResponse) => void,
+  onResetPassword: (user: UserResponse) => void
 ): ColumnDef<UserResponse>[] {
 
   return [
@@ -143,12 +157,10 @@ export function getUserColumns(
     },
     {
       id: "actions",
-      cell: ({ row, table }) => {
+      cell: ({ row }) => {
         const user = row.original
-        // @ts-ignore - Custom table meta
-        const { onViewDetails } = table.options.meta || {}
 
-        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} />
+        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} onResetPassword={onResetPassword} />
       },
     },
   ];
