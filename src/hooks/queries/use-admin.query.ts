@@ -70,6 +70,7 @@ export const useResetPasswordMutation = () => {
                 password: tempPassword
             });
             
+            // Make sure we return the temporary password
             return {
                 userId,
                 tempPassword
