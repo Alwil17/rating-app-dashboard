@@ -49,10 +49,7 @@ const Actions = ({ user, onViewDetails, onEditUser, onDeleteUser }: ActionsProps
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
           Copy ID
         </DropdownMenuItem>
-        {/* Only show if user is not admin */}
-        {user.role === 'user' && (
-          <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
-        )}
+        <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
         {/* Only show if user is admin */}
         {user.role === 'admin' && (
           <DropdownMenuItem onClick={() => onEditUser(user)}>
@@ -143,10 +140,8 @@ export function getUserColumns(
     },
     {
       id: "actions",
-      cell: ({ row, table }) => {
+      cell: ({ row }) => {
         const user = row.original
-        // @ts-ignore - Custom table meta
-        const { onViewDetails } = table.options.meta || {}
 
         return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} />
       },
