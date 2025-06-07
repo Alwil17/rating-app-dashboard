@@ -167,5 +167,27 @@
       "title": "Supprimer la catégorie",
       "message": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action ne peut pas être annulée."
     }
+  },
+  "tags": {
+    "title": "Gestion des tags",
+    "subtitle": "Gérez et organisez vos tags",
+    "addNew": "Ajouter un nouveau tag",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des tags",
+    "columns": {
+      "name": "Nom",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "Créer un tag",
+      "editTitle": "Modifier un tag",
+      "namePlaceholder": "Entrez le nom du tag",
+      "submitButton": "Enregistrer le tag",
+      "cancelButton": "Annuler"
+    },
+    "delete": {
+      "title": "Supprimer le tag",
+      "message": "Êtes-vous sûr de vouloir supprimer ce tag ? Cette action ne peut pas être annulée."
+    }
   }
 }
