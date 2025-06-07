@@ -6,6 +6,8 @@ import { Toaster } from 'sonner';
 import { AuthProvider } from '@/contexts/auth.context';
 import "./globals.css";
 import QueryProvider from "@/providers/query-provider";
+import { ErrorBoundary } from '@/components/error-boundary';
+import { Analytics } from "@/components/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,10 +36,13 @@ export default function RootLayout({
         >
           <QueryProvider>
             <AuthProvider>
-              {children}
-              <Toaster position="top-right" />
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
             </AuthProvider>
           </QueryProvider>
+          <Analytics />
+          <Toaster position="top-right" />
         </ThemeProvider>
       </body>
     </html>
