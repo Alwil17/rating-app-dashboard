@@ -63,10 +63,11 @@ export default function AdminDashboardPage() {
     value: ratingsByCategory.counts[index],
   }));
 
-  // Stats cards data
+  // Stats cards data with translation keys
   const stats = [
     {
       label: 'Total Users',
+      translationKey: 'dashboard.metrics.totalUsers',
       value: isLoading ? '-' : totalUsers.toString(),
       icon: Users,
       color: 'text-blue-600 dark:text-blue-400',
@@ -75,6 +76,7 @@ export default function AdminDashboardPage() {
     },
     {
       label: 'Total Ratings',
+      translationKey: 'dashboard.metrics.totalRatings',
       value: isLoading ? '-' : totalRatings.toString(),
       icon: Star,
       color: 'text-yellow-600 dark:text-yellow-400',
@@ -83,6 +85,7 @@ export default function AdminDashboardPage() {
     },
     {
       label: 'Recent Ratings',
+      translationKey: 'dashboard.metrics.recentActivity',
       value: isLoading ? '-' : recentActivity.toString(),
       icon: Activity,
       color: 'text-green-600 dark:text-green-400',
