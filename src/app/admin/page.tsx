@@ -9,7 +9,6 @@ import { Users, Star, Activity } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '@/components/language-switcher';
 
 // Import extracted components
 import { StatsCards } from './components/stats-cards';
@@ -27,7 +26,6 @@ export default function AdminDashboardPage() {
   const { t } = useTranslation();
   const { totalUsers, totalRatings, recentActivity, isLoading, error } = useStats();
   const { ratingsOverTime, usersByItem, ratingsByCategory, isLoading: chartsLoading } = useChartData();
-  const router = useRouter();
 
   useEffect(() => {
     setPageTitle(t('navigation.dashboard'));
@@ -106,7 +104,6 @@ export default function AdminDashboardPage() {
             {t('dashboard.subtitle')}
           </p>
         </div>
-        <LanguageSwitcher />
       </div>
 
       {/* Stats Cards */}
