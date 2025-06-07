@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "add": "Add",
+    "search": "Search",
+    "confirm": "Confirm",
+    "actions": "Actions"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "items": "Items",
+    "categories": "Categories",
+    "ratings": "Ratings",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "users": {
+    "title": "Users Management",
+    "subtitle": "Manage and organize your users",
+    "addAdmin": "Add new admin",
+    "resetPassword": "Reset Password",
+    "deleteConfirm": "Are you sure you want to delete this user?",
+    "deleteWarning": "This action cannot be undone. This will permanently delete the account and all associated data.",
+    "passwordReset": "Password has been reset successfully",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "joined": "Joined"
+    }
+  },
+  "items": {
+    "title": "Items Management",
+    "subtitle": "Manage and organize your items catalog",
+    "addItem": "Add Item",
+    "deleteConfirm": "Are you sure you want to delete this item?",
+    "deleteWarning": "This action cannot be undone. This will permanently delete the item and all associated data.",
+    "columns": {
+      "name": "Name",
+      "categories": "Categories",
+      "rating": "Rating"
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "subtitle": "Here's an overview of your system's performance and recent activity",
+    "analytics": "Analytics",
+    "overview": "Overview",
+    "users": "Users",
+    "ratings": "Ratings",
+    "metrics": {
+      "totalUsers": "Total Users",
+      "allTime": "All time",
+      "activeUsers": "Active Users",
+      "last30Days": "Last 30 days",
+      "newUsers": "New Users",
+      "today": "Today",
+      "avgRatings": "Avg. Ratings",
+      "perUser": "Per user"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "View and manage your personal information"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "rememberMe": "Remember me"
+  }
+}
