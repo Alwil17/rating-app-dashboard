@@ -6,6 +6,7 @@ import { Star, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import api from "@/utils/axios";
 import { format } from "date-fns";
 
@@ -34,6 +35,7 @@ interface RatingStats {
 
 export function DetailedRatingsAnalytics() {
   const router = useRouter();
+  const { t } = useTranslation();
   
   // Fetch rating distribution data
   const { data: distribution, isLoading: distributionLoading } = useQuery({
@@ -111,7 +113,7 @@ export function DetailedRatingsAnalytics() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Detailed Rating Analytics</CardTitle>
+        <CardTitle>{t('dashboard.charts.detailedRatings.title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {isLoading ? (
@@ -122,7 +124,7 @@ export function DetailedRatingsAnalytics() {
           <>
             {/* Rating Distribution */}
             <div>
-              <h3 className="text-lg font-medium mb-3">Rating Distribution</h3>
+              <h3 className="text-lg font-medium mb-3">{t('dashboard.charts.detailedRatings.distribution.title')}</h3>
               <div className="grid grid-cols-5 gap-2">
                 {distribution?.map((item) => {
                   const percentage = (item.count / totalRatings) * 100;
@@ -168,7 +170,7 @@ export function DetailedRatingsAnalytics() {
             
             {/* Recent Rating Activity */}
             <div>
-              <h3 className="text-lg font-medium mb-3">Recent Rating Activity</h3>
+              <h3 className="text-lg font-medium mb-3">{t('dashboard.charts.detailedRatings.recentActivity.title')}</h3>
               <div className="space-y-3">
                 {recentRatings?.map((rating) => (
                   <div key={rating.id} className="flex items-center justify-between border-b pb-2">
@@ -205,7 +207,7 @@ export function DetailedRatingsAnalytics() {
             {/* Rating Insights */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-muted/50 p-4 rounded-lg">
-                <h4 className="font-medium mb-2">Average Rating</h4>
+                <h4 className="font-medium mb-2">{t('dashboard.charts.detailedRatings.insights.averageRating')}</h4>
                 <div className="flex items-center">
                   <div className="text-2xl font-bold mr-2">{stats?.average.toFixed(1)}</div>
                   <div className="flex">
@@ -230,19 +232,20 @@ export function DetailedRatingsAnalytics() {
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Based on {stats?.totalCount} ratings
+                  {t('dashboard.charts.detailedRatings.insights.basedOn', { count: stats?.totalCount })}
                 </p>
               </div>
               
               <div className="bg-muted/50 p-4 rounded-lg">
-                <h4 className="font-medium mb-2">Top Rated Category</h4>
+                <h4 className="font-medium mb-2">{t('dashboard.charts.detailedRatings.insights.topCategory')}</h4>
                 <div className="text-lg font-semibold">
-                  {stats?.topCategory?.name ?? "No data"}
+                  {stats?.topCategory?.name ?? t('common.noData')}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {stats?.topCategory ? (
-                    `With ${stats.topCategory.count} ratings`
-                  ) : "No ratings available"}
+                  {stats?.topCategory
+                    ? t('dashboard.charts.detailedRatings.insights.withCount', { count: stats.topCategory.count })
+                    : t('dashboard.charts.detailedRatings.insights.noRatings')
+                  }
                 </p>
               </div>
             </div>
@@ -251,7 +254,7 @@ export function DetailedRatingsAnalytics() {
       </CardContent>
       <CardFooter>
         <Button variant="outline" onClick={() => router.push('/admin/ratings')}>
-          View All Ratings
+          {t('dashboard.charts.detailedRatings.viewAll')}
         </Button>
       </CardFooter>
     </Card>
