@@ -61,6 +61,8 @@
     "ratings": "Ratings",
     "metrics": {
       "totalUsers": "Total Users",
+      "totalRatings": "Total Ratings",
+      "recentActivity": "Recent Activity",
       "allTime": "All time",
       "activeUsers": "Active Users",
       "last30Days": "Last 30 days",

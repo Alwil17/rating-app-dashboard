@@ -1,7 +1,7 @@
 {
   "common": {
     "loading": "Chargement...",
-    "error": "Une erreur est survenue",
+    "error": "Une erreur s'est produite",
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
@@ -60,7 +60,9 @@
     "users": "Utilisateurs",
     "ratings": "Évaluations",
     "metrics": {
-      "totalUsers": "Total d'utilisateurs",
+      "totalUsers": "Nombre d'utilisateurs",
+      "totalRatings": "Nombre d'évaluations",
+      "recentActivity": "Activité récente",
       "allTime": "Tout temps",
       "activeUsers": "Utilisateurs actifs",
       "last30Days": "30 derniers jours",
