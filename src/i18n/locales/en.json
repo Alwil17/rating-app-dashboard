@@ -12,7 +12,8 @@
     "confirm": "Confirm",
     "actions": "Actions",
     "noData": "No data",
-    "notAvailable": "N/A"
+    "notAvailable": "N/A",
+    "openMenu": "Open menu"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -48,8 +49,18 @@
     "columns": {
       "name": "Name",
       "categories": "Categories",
+      "tags": "Tags",
       "rating": "Rating",
-      "actions": "Actions"
+      "created": "Created",
+      "none": "None",
+      "more": "more"
+    },
+    "actions": {
+      "viewDetails": "View details",
+      "edit": "Edit item",
+      "manageCategories": "Manage categories",
+      "manageTags": "Manage tags",
+      "delete": "Delete item"
     },
     "details": {
       "title": "Item Details",
