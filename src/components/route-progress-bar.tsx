@@ -1,12 +1,12 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Progress } from "@/components/ui/progress";
 
-export function RouteProgressBar() {
-  const pathname = usePathname();
+function ProgressWithSearchParams() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -56,7 +56,15 @@ export function RouteProgressBar() {
   return (
     <Progress
       value={progress}
-      className="fixed top-0 left-0 right-0 z-50 h-1 bg-primary transition-all ease-in-out duration-300"
+      className="fixed top-0 left-0 right-0 z-50 h-1"
     />
+  );
+}
+
+export function RouteProgressBar() {
+  return (
+    <Suspense fallback={null}>
+      <ProgressWithSearchParams />
+    </Suspense>
   );
 }
