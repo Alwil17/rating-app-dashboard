@@ -71,7 +71,7 @@ const Actions = ({
         {user.role === 'user' && (
           <DropdownMenuItem onClick={() => onResetPassword(user)}>
           <KeyRound className="h-4 w-4 mr-2" />
-          {t('users.resetPassword')}
+          {t('users.resetPasswordText')}
         </DropdownMenuItem>
         )}
         
