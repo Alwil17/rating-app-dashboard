@@ -39,25 +39,25 @@ export function DetailedRatingsAnalytics() {
   const { data: distribution, isLoading: distributionLoading } = useQuery({
     queryKey: ['rating-distribution'],
     queryFn: async () => {
-      // In a real app, you'd have a dedicated endpoint for this
       const response = await api.get<RatingDistribution[]>('/ratings/distribution');
       return response.data;
     },
+    // Fallback data in case the endpoint isn't available yet
     placeholderData: [5, 4, 3, 2, 1].map(value => ({ 
       value, 
       count: Math.floor(Math.random() * 100) 
-    })),
-    enabled: false // Remove this when the real API endpoint is available
+    }))
+    // Removed the enabled: false flag to allow real API calls
   });
 
   // Fetch recent ratings data
   const { data: recentRatings, isLoading: ratingsLoading } = useQuery({
     queryKey: ['recent-ratings'],
     queryFn: async () => {
-      // In a real app, this would be a real endpoint
       const response = await api.get<RecentRating[]>('/ratings/recent');
       return response.data;
     },
+    // Fallback data in case the endpoint isn't available yet
     placeholderData: [
       {
         id: 1,
@@ -80,18 +80,18 @@ export function DetailedRatingsAnalytics() {
         user_name: "Alex Johnson",
         created_at: new Date(Date.now() - 7200000).toISOString()
       }
-    ],
-    enabled: false // Remove this when the real API endpoint is available
+    ]
+    // Removed the enabled: false flag to allow real API calls
   });
 
   // Fetch overall stats
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['rating-stats'],
     queryFn: async () => {
-      // In a real app, this would be a real endpoint
       const response = await api.get<RatingStats>('/ratings/stats');
       return response.data;
     },
+    // Fallback data in case the endpoint isn't available yet
     placeholderData: {
       average: 4.3,
       totalCount: 328,
@@ -99,8 +99,8 @@ export function DetailedRatingsAnalytics() {
         name: "Electronics",
         count: 87
       }
-    },
-    enabled: false // Remove this when the real API endpoint is available
+    }
+    // Removed the enabled: false flag to allow real API calls
   });
 
   const isLoading = distributionLoading || ratingsLoading || statsLoading;
