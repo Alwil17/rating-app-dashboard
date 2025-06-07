@@ -1,30 +1,25 @@
-# Rating App System
+# Rating App Dashboard
 
-A full-stack rating and review system with an admin dashboard built using Next.js and FastAPI. This application allows users to rate and review items across various categories while providing administrators with powerful analytics and management tools.
+A modern admin dashboard for a rating and review system built with Next.js. This responsive web application provides powerful analytics, internationalization, and comprehensive management tools for items, categories, users, and ratings.
 
 ## Repository Description (for GitHub)
 
-Rating App is a modern, responsive web application that enables users to rate and review items while providing administrators with comprehensive analytics and management capabilities. The system features a Next.js frontend with a beautiful UI using Tailwind CSS and a robust FastAPI backend with PostgreSQL.
+Rating App Dashboard is a feature-rich administrative interface that helps manage a rating and review system. Built with Next.js and TypeScript, it offers a beautiful UI using Tailwind CSS and shadcn components. The dashboard includes real-time analytics, multi-language support (i18n), and comprehensive management capabilities.
 
 ## Topics
 
 - nextjs
-- fastapi
-- python
 - typescript
-- rating-system
-- tailwindcss
 - dashboard
 - analytics
-- postgresql
 - react-query
 - shadcn-ui
 - internationalization
 - admin-panel
 - data-visualization
 - user-management
+- tailwindcss
 - recharts
 - tanstack
 - i18n
-- pydantic
-- sqlalchemy
+- rating-system
