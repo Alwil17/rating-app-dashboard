@@ -68,6 +68,24 @@
       "today": "Today",
       "avgRatings": "Avg. Ratings",
       "perUser": "Per user"
+    },
+    "charts": {
+      "categoryDistribution": {
+        "title": "Ratings by Category",
+        "subtitle": "Distribution across categories",
+        "noData": "No rated categories available",
+        "showingTop": "Showing top {{count}} categories with ratings",
+        "category": "Category"
+      },
+      "topItems": {
+        "title": "Top Items by User Rating",
+        "subtitle": "Most popular items",
+        "noData": "No rated items available"
+      },
+      "ratingTrend": {
+        "title": "Ratings Over Time",
+        "subtitle": "Daily rating trends" 
+      }
     }
   },
   "profile": {
