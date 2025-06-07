@@ -10,7 +10,8 @@
     "add": "Ajouter",
     "search": "Rechercher",
     "confirm": "Confirmer",
-    "actions": "Actions"
+    "actions": "Actions",
+    "noData": "Aucune donnée"
   },
   "navigation": {
     "dashboard": "Tableau de bord",
@@ -90,6 +91,23 @@
         "title": "Évolution des évaluations",
         "subtitle": "Tendances quotidiennes des évaluations",
         "ratings": "Évaluations"
+      },
+      "detailedRatings": {
+        "title": "Analytique détaillée des évaluations",
+        "viewAll": "Voir toutes les évaluations",
+        "distribution": {
+          "title": "Distribution des évaluations"
+        },
+        "recentActivity": {
+          "title": "Activité récente d'évaluation"
+        },
+        "insights": {
+          "averageRating": "Évaluation moyenne",
+          "basedOn": "Basée sur {{count}} évaluations",
+          "topCategory": "Catégorie la mieux notée",
+          "withCount": "Avec {{count}} évaluations",
+          "noRatings": "Aucune évaluation disponible"
+        }
       }
     }
   },

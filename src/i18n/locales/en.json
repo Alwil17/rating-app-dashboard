@@ -10,7 +10,8 @@
     "add": "Add",
     "search": "Search",
     "confirm": "Confirm",
-    "actions": "Actions"
+    "actions": "Actions",
+    "noData": "No data"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -90,6 +91,23 @@
         "title": "Ratings Over Time",
         "subtitle": "Daily rating trends",
         "ratings": "Ratings"
+      },
+      "detailedRatings": {
+        "title": "Detailed Rating Analytics",
+        "viewAll": "View All Ratings",
+        "distribution": {
+          "title": "Rating Distribution"
+        },
+        "recentActivity": {
+          "title": "Recent Rating Activity"
+        },
+        "insights": {
+          "averageRating": "Average Rating",
+          "basedOn": "Based on {{count}} ratings",
+          "topCategory": "Top Rated Category",
+          "withCount": "With {{count}} ratings",
+          "noRatings": "No ratings available"
+        }
       }
     }
   },
