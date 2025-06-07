@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Users, TrendingUp, Activity, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import api from "@/utils/axios";
 import { AreaChart, BarChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Bar } from "recharts";
 import { format, subDays } from "date-fns";
@@ -31,6 +32,7 @@ interface UserStats {
 
 export function DetailedUserAnalytics() {
   const router = useRouter();
+  const { t } = useTranslation();
   
   // User growth over time
   const { data: userGrowth, isLoading: growthLoading } = useQuery({
@@ -87,7 +89,7 @@ export function DetailedUserAnalytics() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>User Analytics</CardTitle>
+        <CardTitle>{t('dashboard.userAnalytics.title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {isLoading ? (
@@ -99,31 +101,31 @@ export function DetailedUserAnalytics() {
             {/* User Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard 
-                title="Total Users" 
+                title={t('dashboard.metrics.totalUsers')}
                 value={userStats?.total_users ?? 0} 
                 icon={<Users className="h-5 w-5" />}
-                description="All time"
+                description={t('dashboard.metrics.allTime')}
                 color="bg-blue-50 text-blue-600"
               />
               <MetricCard 
-                title="Active Users" 
+                title={t('dashboard.metrics.activeUsers')}
                 value={userStats?.active_users ?? 0} 
                 icon={<Activity className="h-5 w-5" />}
-                description="Last 30 days"
+                description={t('dashboard.metrics.last30Days')}
                 color="bg-green-50 text-green-600"
               />
               <MetricCard 
-                title="New Users" 
+                title={t('dashboard.metrics.newUsers')}
                 value={userStats?.new_users_today ?? 0} 
                 icon={<UserPlus className="h-5 w-5" />}
-                description="Today"
+                description={t('dashboard.metrics.today')}
                 color="bg-purple-50 text-purple-600"
               />
               <MetricCard 
-                title="Avg. Ratings" 
+                title={t('dashboard.metrics.avgRatings')}
                 value={userStats?.average_ratings_per_user ?? 0} 
                 icon={<TrendingUp className="h-5 w-5" />}
-                description="Per user"
+                description={t('dashboard.metrics.perUser')}
                 color="bg-amber-50 text-amber-600"
                 isDecimal
               />
@@ -131,7 +133,7 @@ export function DetailedUserAnalytics() {
 
             {/* User Growth Chart */}
             <div>
-              <h3 className="text-lg font-medium mb-3">User Growth</h3>
+              <h3 className="text-lg font-medium mb-3">{t('dashboard.userAnalytics.growthChart.title')}</h3>
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
@@ -165,6 +167,7 @@ export function DetailedUserAnalytics() {
                         boxShadow: "0 1px 2px hsla(var(--shadow))",
                       }}
                       labelFormatter={(value) => format(new Date(value), 'MMMM d, yyyy')}
+                      formatter={(value) => [value, t('dashboard.userAnalytics.growthChart.users')]}
                     />
                     <Area 
                       type="monotone" 
@@ -172,7 +175,7 @@ export function DetailedUserAnalytics() {
                       stroke="var(--primary)" 
                       fillOpacity={1} 
                       fill="url(#colorUsers)"
-                      name="Users" 
+                      name={t('dashboard.userAnalytics.growthChart.users')} 
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -181,7 +184,7 @@ export function DetailedUserAnalytics() {
 
             {/* Most Active Users */}
             <div>
-              <h3 className="text-lg font-medium mb-3">Most Active Users</h3>
+              <h3 className="text-lg font-medium mb-3">{t('dashboard.userAnalytics.activeUsers.title')}</h3>
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -223,10 +226,10 @@ export function DetailedUserAnalytics() {
                       }}
                     />
                     <Tooltip
-                      formatter={(value) => [`${value} ratings`, "Activity"]}
+                      formatter={(value) => [`${value} ${t('dashboard.userAnalytics.activeUsers.ratings')}`, t('dashboard.userAnalytics.activeUsers.activity')]}
                       labelFormatter={(value) => {
                         const user = userEngagement?.find(u => u.username === value);
-                        return `${value} (Last active: ${user ? format(new Date(user.last_activity), 'MMM d, yyyy') : 'N/A'})`;
+                        return `${value} (${t('dashboard.userAnalytics.activeUsers.lastActive')}: ${user ? format(new Date(user.last_activity), 'MMM d, yyyy') : t('common.notAvailable')})`;
                       }}
                       contentStyle={{
                         backgroundColor: "var(--background)",
@@ -239,7 +242,7 @@ export function DetailedUserAnalytics() {
                       dataKey="ratings_count" 
                       fill="var(--primary)" 
                       radius={[0, 4, 4, 0]}
-                      name="Ratings"
+                      name={t('dashboard.userAnalytics.activeUsers.ratings')}
                     />
                   </BarChart>
                 </ResponsiveContainer>
@@ -248,7 +251,7 @@ export function DetailedUserAnalytics() {
 
             {/* Recent User Registrations */}
             <div>
-              <h3 className="text-lg font-medium mb-3">Recent Registrations</h3>
+              <h3 className="text-lg font-medium mb-3">{t('dashboard.userAnalytics.recentRegistrations.title')}</h3>
               <div className="space-y-3">
                 {userGrowth?.slice(-3).reverse().map((day, index) => (
                   <div key={day.date} className="flex items-center justify-between border-b pb-2">
@@ -258,7 +261,9 @@ export function DetailedUserAnalytics() {
                       </div>
                       <div>
                         <p className="text-sm font-medium">
-                          {day.count} new user{day.count !== 1 ? 's' : ''} joined
+                          {t('dashboard.userAnalytics.recentRegistrations.userJoined', {
+                            count: day.count,
+                          })}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {format(new Date(day.date), 'MMMM d, yyyy')}
@@ -274,7 +279,7 @@ export function DetailedUserAnalytics() {
       </CardContent>
       <CardFooter>
         <Button variant="outline" onClick={() => router.push('/admin/users')}>
-          View All Users
+          {t('dashboard.userAnalytics.viewAllUsers')}
         </Button>
       </CardFooter>
     </Card>
