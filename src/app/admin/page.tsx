@@ -18,6 +18,8 @@ import { RatingTrendChart } from './components/rating-trend-chart';
 import { TopItemsChart } from './components/top-items-chart';
 import { CategoryDistributionChart } from './components/category-distribution-chart';
 import { RecentActivity } from './components/recent-activity';
+// Import the new component
+import { DetailedRatingsAnalytics } from './components/detailed-ratings-analytics';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
@@ -135,115 +137,7 @@ export default function AdminDashboardPage() {
         </TabsContent>
 
         <TabsContent value="ratings" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Detailed Rating Analytics</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {chartsLoading ? (
-                <div className="flex justify-center items-center h-64">
-                  <Loader2 className="h-8 w-8 animate-spin" />
-                </div>
-              ) : (
-                <>
-                  {/* Rating Distribution */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Rating Distribution</h3>
-                    <div className="grid grid-cols-5 gap-2">
-                      {[5, 4, 3, 2, 1].map((rating) => {
-                        // Calculate number of ratings for this score
-                        const count = Math.floor(Math.random() * 100); // Replace with actual data
-                        const percentage = count / 100 * 100;
-                        
-                        return (
-                          <div key={rating} className="flex flex-col items-center">
-                            <div className="flex items-center gap-1 mb-1">
-                              <Star className={`h-4 w-4 ${rating >= 4 ? 'text-yellow-500 fill-yellow-500' : 
-                                rating === 3 ? 'text-yellow-400 fill-yellow-400' : 'text-red-400 fill-red-400'}`} />
-                              <span>{rating}</span>
-                            </div>
-                            <div className="w-full bg-muted rounded-full h-2 mb-1">
-                              <div 
-                                className={`h-2 rounded-full ${
-                                  rating >= 4 ? 'bg-green-500' :
-                                  rating === 3 ? 'bg-yellow-500' : 'bg-red-500'
-                                }`}
-                                style={{ width: `${percentage}%` }}
-                              ></div>
-                            </div>
-                            <span className="text-xs text-muted-foreground">{count}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  
-                  {/* Recent Rating Activity */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Recent Rating Activity</h3>
-                    <div className="space-y-3">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex items-center justify-between border-b pb-2">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-8 w-8">
-                              <AvatarFallback>U{i}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="text-sm font-medium">User {i}</p>
-                              <p className="text-xs text-muted-foreground">Item {i+3}</p>
-                            </div>
-                          </div>
-                          <div className="flex items-center">
-                            {Array(5).fill(0).map((_, index) => (
-                              <Star 
-                                key={index} 
-                                className={`h-3 w-3 ${index < 5-i ? 'fill-yellow-400 text-yellow-400' : 'text-muted'}`} 
-                              />
-                            ))}
-                            <span className="ml-2 text-sm text-muted-foreground">{Math.floor(Math.random() * 24) + 1}h ago</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Rating Insights */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-muted/50 p-4 rounded-lg">
-                      <h4 className="font-medium mb-2">Average Rating</h4>
-                      <div className="flex items-center">
-                        <div className="text-2xl font-bold mr-2">4.3</div>
-                        <div className="flex">
-                          {[1, 2, 3, 4, 5].map((i) => (
-                            <Star 
-                              key={i}
-                              className={`h-4 w-4 ${i <= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-yellow-400 fill-yellow-400 opacity-30'}`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">Based on {totalRatings} ratings</p>
-                    </div>
-                    
-                    <div className="bg-muted/50 p-4 rounded-lg">
-                      <h4 className="font-medium mb-2">Top Rated Category</h4>
-                      <div className="text-lg font-semibold">
-                        {formattedCategoryData.length > 0 ? 
-                          formattedCategoryData.sort((a, b) => b.value - a.value)[0].name : 
-                          "No data"}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">Most popular among users</p>
-                    </div>
-                  </div>
-                </>
-              )}
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" onClick={() => router.push('/admin/ratings')}>
-                View All Ratings
-              </Button>
-            </CardFooter>
-          </Card>
+          <DetailedRatingsAnalytics />
         </TabsContent>
 
         <TabsContent value="users" className="space-y-4">
