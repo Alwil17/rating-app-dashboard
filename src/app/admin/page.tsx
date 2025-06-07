@@ -8,6 +8,8 @@ import { useChartData } from '@/hooks/useChartData';
 import { Users, Star, Activity } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
 // Import extracted components
 import { StatsCards } from './components/stats-cards';
@@ -17,17 +19,19 @@ import { CategoryDistributionChart } from './components/category-distribution-ch
 // Import the new component
 import { DetailedRatingsAnalytics } from './components/detailed-ratings-analytics';
 import { DetailedUserAnalytics } from './components/detailed-user-analytics';
+import { t } from 'i18next';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
   const { setPageTitle } = useBreadcrumb();
+  const { t } = useTranslation();
   const { totalUsers, totalRatings, recentActivity, isLoading, error } = useStats();
   const { ratingsOverTime, usersByItem, ratingsByCategory, isLoading: chartsLoading } = useChartData();
   const router = useRouter();
 
   useEffect(() => {
-    setPageTitle('Dashboard');
-  }, [setPageTitle]);
+    setPageTitle(t('navigation.dashboard'));
+  }, [setPageTitle, t]);
 
   // Transform data for charts
   const formattedRatingsData = ratingsOverTime.dates.reduce((acc: any[], incomingDate, index) => {
@@ -93,13 +97,16 @@ export default function AdminDashboardPage() {
   return (
     <div>
       {/* Header with welcome and time of day greeting */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {getGreeting()}, {user?.name}
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Here's an overview of your system's performance and recent activity.
-        </p>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t(`dashboard.greeting.${getTimeOfDay()}`)}, {user?.name}
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            {t('dashboard.subtitle')}
+          </p>
+        </div>
+        <LanguageSwitcher />
       </div>
 
       {/* Stats Cards */}
@@ -108,11 +115,11 @@ export default function AdminDashboardPage() {
       {/* Charts - Using extracted components */}
       <Tabs defaultValue="overview" className="mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Analytics</h2>
+          <h2 className="text-lg font-semibold">{t('dashboard.analytics')}</h2>
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="ratings">Ratings</TabsTrigger>
-            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="overview">{t('dashboard.overview')}</TabsTrigger>
+            <TabsTrigger value="ratings">{t('dashboard.ratings')}</TabsTrigger>
+            <TabsTrigger value="users">{t('dashboard.users')}</TabsTrigger>
           </TabsList>
         </div>
 
@@ -146,8 +153,12 @@ export default function AdminDashboardPage() {
 }
 
 function getGreeting() {
+  return t(`dashboard.greeting.${getTimeOfDay()}`);
+}
+
+function getTimeOfDay() {
   const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
+  if (hour < 12) return "morning";
+  if (hour < 18) return "afternoon";
+  return "evening";
 }
