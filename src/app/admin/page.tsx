@@ -18,6 +18,7 @@ import { TopItemsChart } from './components/top-items-chart';
 import { CategoryDistributionChart } from './components/category-distribution-chart';
 // Import the new component
 import { DetailedRatingsAnalytics } from './components/detailed-ratings-analytics';
+import { DetailedUserAnalytics } from './components/detailed-user-analytics';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
@@ -139,19 +140,7 @@ export default function AdminDashboardPage() {
         </TabsContent>
 
         <TabsContent value="users" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>User Analytics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>User growth and engagement analytics will be displayed here.</p>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" onClick={() => router.push('/admin/users')}>
-                View All Users
-              </Button>
-            </CardFooter>
-          </Card>
+          <DetailedUserAnalytics />
         </TabsContent>
       </Tabs>
     </div>
