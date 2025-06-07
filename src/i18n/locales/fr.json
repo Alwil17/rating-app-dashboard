@@ -84,7 +84,8 @@
       },
       "ratingTrend": {
         "title": "Évolution des évaluations",
-        "subtitle": "Tendances quotidiennes des évaluations"
+        "subtitle": "Tendances quotidiennes des évaluations",
+        "ratings": "Évaluations"
       }
     }
   },
