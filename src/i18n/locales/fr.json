@@ -8,11 +8,16 @@
     "edit": "Modifier",
     "view": "Voir",
     "add": "Ajouter",
+    "remove": "Supprimer {{item}}",
     "search": "Rechercher",
     "confirm": "Confirmer",
     "actions": "Actions",
     "noData": "Aucune donnée",
-    "notAvailable": "N/D"
+    "notAvailable": "N/D",
+    "create": "Créer",
+    "close": "Fermer",
+    "copy": "Copier dans le presse-papiers",
+    "openMenu": "Ouvrir le menu"
   },
   "navigation": {
     "dashboard": "Tableau de bord",
@@ -31,11 +36,41 @@
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
     "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.",
     "passwordReset": "Le mot de passe a été réinitialisé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des utilisateurs",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
     "columns": {
       "name": "Nom",
       "email": "Email",
       "role": "Rôle",
       "joined": "Inscrit le"
+    },
+    "actions": {
+      "copyId": "Copier l'ID",
+      "viewDetails": "Voir les détails",
+      "edit": "Modifier l'utilisateur"
+    },
+    "details": {
+      "title": "Détails de l'utilisateur",
+      "memberSince": "Membre depuis {{date}}"
+    },
+    "form": {
+      "createTitle": "Créer un nouvel administrateur",
+      "editTitle": "Modifier l'administrateur: {{name}}",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Entrez le nom de l'administrateur",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Entrez l'adresse email",
+      "passwordLabel": "Mot de passe",
+      "passwordLabelOptional": "Mot de passe (laisser vide pour conserver l'actuel)",
+      "passwordPlaceholder": "Entrez le mot de passe",
+      "imageUrlLabel": "URL de l'image de profil",
+      "imageUrlPlaceholder": "Entrez l'URL de l'image de profil (facultatif)"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe pour {{name}}",
+      "confirmation": "Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ? Un nouveau mot de passe temporaire sera généré.",
+      "success": "Le mot de passe a été réinitialisé avec succès. Veuillez partager ce mot de passe temporaire avec l'utilisateur.",
+      "confirm": "Réinitialiser le mot de passe"
     }
   },
   "items": {
@@ -56,19 +91,41 @@
       "description": "Description",
       "categories": "Catégories",
       "tags": "Tags",
-      "ratings": "Évaluations",
+      "ratings": "évaluations",
       "noCategories": "Aucune catégorie attribuée",
       "noTags": "Aucun tag attribué",
-      "noRatings": "Pas encore d'évaluations"
+      "noRatings": "Pas encore d'évaluations",
+      "created": "Créé le",
+      "lastUpdated": "Dernière mise à jour"
     },
     "form": {
-      "createTitle": "Créer un article",
-      "editTitle": "Modifier l'article",
-      "namePlaceholder": "Entrez le nom de l'article",
-      "descriptionPlaceholder": "Entrez la description de l'article",
-      "imageUrlPlaceholder": "Entrez l'URL de l'image",
+      "createTitle": "Créer un nouvel article",
+      "editTitle": "Modifier l'article: {{name}}",
+      "fields": {
+        "name": {
+          "label": "Nom",
+          "placeholder": "Entrez le nom de l'article"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez une description pour cet article"
+        },
+        "imageUrl": {
+          "label": "URL de l'image",
+          "placeholder": "Entrez l'URL de l'image (facultatif)"
+        }
+      },
       "submitButton": "Enregistrer l'article",
-      "cancelButton": "Annuler"
+      "cancelButton": "Annuler",
+      "validation": {
+        "required": "Ce champ est obligatoire",
+        "maxLength": "Maximum {{count}} caractères"
+      }
+    },
+    "tagManager": {
+      "title": "Gérer les tags pour {{name}}",
+      "addTagPlaceholder": "Ajouter un tag...",
+      "noTags": "Aucun tag ajouté"
     }
   },
   "dashboard": {

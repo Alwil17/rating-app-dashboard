@@ -8,12 +8,16 @@
     "edit": "Edit",
     "view": "View",
     "add": "Add",
-    "search": "Search",
+    "remove": "Remove {{item}}",
     "confirm": "Confirm",
     "actions": "Actions",
     "noData": "No data",
     "notAvailable": "N/A",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "saveChanges": "Save changes",
+    "close": "Close",
+    "create": "Create",
+    "copy": "Copy to clipboard"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -32,11 +36,41 @@
     "deleteConfirm": "Are you sure you want to delete this user?",
     "deleteWarning": "This action cannot be undone. This will permanently delete the account and all associated data.",
     "passwordReset": "Password has been reset successfully",
+    "errorLoading": "Error loading users list",
+    "deleteSuccess": "{{name}} has been deleted successfully",
     "columns": {
       "name": "Name",
       "email": "Email",
       "role": "Role",
       "joined": "Joined"
+    },
+    "actions": {
+      "copyId": "Copy ID",
+      "viewDetails": "View details",
+      "edit": "Edit user"
+    },
+    "details": {
+      "title": "User Details",
+      "memberSince": "Member since {{date}}"
+    },
+    "form": {
+      "createTitle": "Create New Admin",
+      "editTitle": "Edit Admin: {{name}}",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter admin name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter email address",
+      "passwordLabel": "Password",
+      "passwordLabelOptional": "Password (leave empty to keep current)",
+      "passwordPlaceholder": "Enter password",
+      "imageUrlLabel": "Profile Image URL",
+      "imageUrlPlaceholder": "Enter profile image URL (optional)"
+    },
+    "resetPassword": {
+      "title": "Reset Password for {{name}}",
+      "confirmation": "Are you sure you want to reset this user's password? A new temporary password will be generated.",
+      "success": "Password has been reset successfully. Please share this temporary password with the user.",
+      "confirm": "Reset Password"
     }
   },
   "items": {
@@ -62,24 +96,53 @@
       "manageTags": "Manage tags",
       "delete": "Delete item"
     },
+    "tagManager": {
+      "title": "Manage Tags for {{name}}",
+      "addTagPlaceholder": "Add tag...",
+      "noTags": "No tags added"
+    },
+    "categoryManager": {
+      "title": "Manage Categories for {{name}}",
+      "noCategories": "No categories selected",
+      "selectedCategories": "Selected Categories",
+      "availableCategories": "Available Categories",
+      "searchPlaceholder": "Search categories..."
+    },
+    "form": {
+      "createTitle": "Create New Item",
+      "editTitle": "Edit Item: {{name}}",
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter item name"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter a description for this item"
+        },
+        "imageUrl": {
+          "label": "Image URL",
+          "placeholder": "Enter image URL (optional)"
+        }
+      },
+      "submitButton": "Save Item",
+      "cancelButton": "Cancel",
+      "validation": {
+        "required": "This field is required",
+        "maxLength": "Maximum {{count}} characters"
+      }
+    },
     "details": {
       "title": "Item Details",
       "description": "Description",
       "categories": "Categories",
       "tags": "Tags",
-      "ratings": "Ratings",
+      "ratings": "ratings",
       "noCategories": "No categories assigned",
       "noTags": "No tags assigned",
-      "noRatings": "No ratings yet"
-    },
-    "form": {
-      "createTitle": "Create Item",
-      "editTitle": "Edit Item",
-      "namePlaceholder": "Enter item name",
-      "descriptionPlaceholder": "Enter item description",
-      "imageUrlPlaceholder": "Enter image URL",
-      "submitButton": "Save Item",
-      "cancelButton": "Cancel"
+      "noRatings": "No ratings yet",
+      "created": "Created",
+      "lastUpdated": "Last Updated"
     }
   },
   "dashboard": {
