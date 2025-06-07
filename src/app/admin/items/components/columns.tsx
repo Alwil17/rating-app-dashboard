@@ -103,13 +103,17 @@ export function getItemColumns(
     onEditItem: (item: ItemResponse) => void,
     onDeleteItem: (itemId: number) => void,
     onManageCategories: (item: ItemResponse) => void,
-    onManageTags: (item: ItemResponse) => void
+    onManageTags: (item: ItemResponse) => void,
+    t?: (key: string, options?: any) => string // Add translation function parameter
 ): ColumnDef<ItemResponse>[] {
+    // Use t if provided, otherwise use a placeholder function that returns the key
+    const translate = t || ((key: string) => key)
+
     return [
         {
             accessorKey: "name",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Name" />
+                <DataTableColumnHeader column={column} title={translate("items.columns.name")} />
             ),
             cell: ({ row }) => {
                 const item = row.original
@@ -134,7 +138,7 @@ export function getItemColumns(
         {
             accessorKey: "categories",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Categories" />
+                <DataTableColumnHeader column={column} title={translate("items.columns.categories")} />
             ),
             cell: ({ row }) => {
                 const categories = row.getValue("categories") as ItemResponse["categories"]
@@ -184,7 +188,7 @@ export function getItemColumns(
         {
             accessorKey: "avg_rating",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Rating" />
+                <DataTableColumnHeader column={column} title={translate("items.columns.rating")} />
             ),
             cell: ({ row }) => {
                 const rating = row.getValue("avg_rating") as number
