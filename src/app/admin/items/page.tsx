@@ -84,7 +84,7 @@ export default function AdminItemsPage() {
   if (error) {
       return (
           <div className="flex flex-col items-center justify-center h-96">
-              <p className="text-destructive">Error loading items</p>
+              <p className="text-destructive">{t('items.errorLoading')}</p>
               <p className="text-sm text-muted-foreground">{(error as Error).message}</p>
           </div>
       );
@@ -111,7 +111,8 @@ export default function AdminItemsPage() {
                       handleEditItem,
                       handleDeleteItem,
                       handleManageCategories,
-                      handleManageTags
+                      handleManageTags,
+                      t // Pass the translation function to the columns
                   )} 
                   data={items || []}
                   searchColumn="name"
