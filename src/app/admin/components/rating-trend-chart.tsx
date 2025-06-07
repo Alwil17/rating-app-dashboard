@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Loader2 } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface RatingTrendChartProps {
   data: Array<{ month: string; ratings: number }>;
@@ -11,11 +12,13 @@ interface RatingTrendChartProps {
 }
 
 export function RatingTrendChart({ data, isLoading }: Readonly<RatingTrendChartProps>) {
+  const { t } = useTranslation();
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Ratings Over Time</CardTitle>
-        <CardDescription>Daily rating trends</CardDescription>
+        <CardTitle>{t('dashboard.charts.ratingTrend.title')}</CardTitle>
+        <CardDescription>{t('dashboard.charts.ratingTrend.subtitle')}</CardDescription>
       </CardHeader>
       <CardContent className="h-[300px]">
         {isLoading ? (
@@ -62,6 +65,10 @@ export function RatingTrendChart({ data, isLoading }: Readonly<RatingTrendChartP
                   const date = new Date(value);
                   return format(date, 'MMMM d, yyyy');
                 }}
+                formatter={(value) => [
+                  value, 
+                  t('dashboard.charts.ratingTrend.ratings')
+                ]}
               />
               <Area 
                 type="monotone" 
@@ -69,7 +76,7 @@ export function RatingTrendChart({ data, isLoading }: Readonly<RatingTrendChartP
                 stroke="var(--primary)" 
                 fillOpacity={1} 
                 fill="url(#colorRatings)" 
-                name="Ratings" 
+                name={t('dashboard.charts.ratingTrend.ratings')} 
               />
             </AreaChart>
           </ResponsiveContainer>

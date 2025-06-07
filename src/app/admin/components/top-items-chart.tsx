@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface TopItemsChartProps {
   data: Array<{ item: string; users: number }>;
@@ -10,18 +11,20 @@ interface TopItemsChartProps {
 }
 
 export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>) {
+  const { t } = useTranslation();
+  
   // Filter out items with zero ratings and ensure we have data
   const filteredData = data.filter(item => item.users > 0);
 
   const cardDescription =
     filteredData.length < data.length
-      ? `Showing ${filteredData.length} items with ratings`
-      : "Most popular items";
+      ? t('dashboard.charts.topItems.showingCount', { count: filteredData.length })
+      : t('dashboard.charts.topItems.subtitle');
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top Items by User Rating</CardTitle>
+        <CardTitle>{t('dashboard.charts.topItems.title')}</CardTitle>
         <CardDescription>
           {cardDescription}
         </CardDescription>
@@ -38,7 +41,7 @@ export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>)
           if (filteredData.length === 0) {
             return (
               <div className="flex items-center justify-center h-64 text-muted-foreground">
-                No rated items available
+                {t('dashboard.charts.topItems.noData')}
               </div>
             );
           }
@@ -65,6 +68,7 @@ export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>)
                   axisLine={false}
                 />
                 <Tooltip 
+                  formatter={(value) => [value, t('dashboard.charts.topItems.users')]}
                   contentStyle={{
                     backgroundColor: "var(--background)",
                     borderColor: "var(--border)",
@@ -77,7 +81,7 @@ export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>)
                   dataKey="users" 
                   fill="var(--primary)" 
                   radius={[0, 4, 4, 0]}
-                  name="Users"
+                  name={t('dashboard.charts.topItems.users')}
                 />
               </BarChart>
             </ResponsiveContainer>

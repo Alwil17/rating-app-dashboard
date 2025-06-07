@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { ModeToggle } from "@/components/layout/mode-toggle";
 import UserDropdown from "@/components/layout/user.dropdown";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
@@ -32,6 +33,7 @@ export default function AdminHeader() {
       </div>
       <div className="flex gap-3 ml-auto">
         <ModeToggle />
+        <LanguageSwitcher />
         <UserDropdown />
       </div>
     </header>

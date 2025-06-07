@@ -25,13 +25,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "@/components/ui/datatable-column-header";
+import { useTranslation } from "react-i18next";
 
 interface ActionsProps {
   user: UserResponse
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
   onDeleteUser: (user: UserResponse) => void,
-  onResetPassword: (user: UserResponse) => void
+  onResetPassword: (user: UserResponse) => void,
+  t: (key: string, options?: any) => string
 }
 
 const Actions = ({ 
@@ -39,28 +41,29 @@ const Actions = ({
   onViewDetails, 
   onEditUser, 
   onDeleteUser,
-  onResetPassword 
+  onResetPassword,
+  t
 }: ActionsProps) => {
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
+          <span className="sr-only">{t('common.openMenu')}</span>
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('common.actions')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id.toString())}>
-          Copy ID
+          {t('users.actions.copyId')}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onViewDetails(user)}>View details</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onViewDetails(user)}>{t('users.actions.viewDetails')}</DropdownMenuItem>
         {/* Only show if user is admin */}
         {user.role === 'admin' && (
           <DropdownMenuItem onClick={() => onEditUser(user)}>
-            Edit user
+            {t('users.actions.edit')}
           </DropdownMenuItem>
         )}
         
@@ -68,7 +71,7 @@ const Actions = ({
         {user.role === 'user' && (
           <DropdownMenuItem onClick={() => onResetPassword(user)}>
           <KeyRound className="h-4 w-4 mr-2" />
-          Reset password
+          {t('users.resetPasswordText')}
         </DropdownMenuItem>
         )}
         
@@ -76,19 +79,19 @@ const Actions = ({
         <AlertDialog>
             <AlertDialogTrigger asChild>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive">
-                Supprimer
+                {t('common.delete')}
               </DropdownMenuItem>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+                <AlertDialogTitle>{t('users.deleteConfirm')}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.
+                  {t('users.deleteWarning')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Annuler</AlertDialogCancel>
-                <AlertDialogAction onClick={() => onDeleteUser(user)}>Confirmer</AlertDialogAction>
+                <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                <AlertDialogAction onClick={() => onDeleteUser(user)}>{t('common.confirm')}</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -101,14 +104,16 @@ export function getUserColumns(
   onViewDetails: (user: UserResponse) => void,
   onEditUser: (user: UserResponse) => void,
   onDeleteUser: (user: UserResponse) => void,
-  onResetPassword: (user: UserResponse) => void
+  onResetPassword: (user: UserResponse) => void,
+  t?: (key: string, options?: any) => string
 ): ColumnDef<UserResponse>[] {
+  const translate = t || ((key: string) => key);
 
   return [
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Name" />
+        <DataTableColumnHeader column={column} title={translate("users.columns.name")} />
       ),
       cell: ({ row }) => {
         const user = row.original
@@ -128,13 +133,13 @@ export function getUserColumns(
     {
       accessorKey: "email",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Email" />
+        <DataTableColumnHeader column={column} title={translate("users.columns.email")} />
       )
     },
     {
       accessorKey: "role",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Role" />
+        <DataTableColumnHeader column={column} title={translate("users.columns.role")} />
       ),
       cell: ({ row }) => {
         const role = row.getValue("role") as string
@@ -149,7 +154,7 @@ export function getUserColumns(
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Joined" />
+        <DataTableColumnHeader column={column} title={translate("users.columns.joined")} />
       ),
       cell: ({ row }) => {
         return new Date(row.getValue("created_at")).toLocaleDateString()
@@ -158,9 +163,15 @@ export function getUserColumns(
     {
       id: "actions",
       cell: ({ row }) => {
-        const user = row.original
-
-        return <Actions user={user} onViewDetails={onViewDetails} onEditUser={onEditUser} onDeleteUser={onDeleteUser} onResetPassword={onResetPassword} />
+        const user = row.original;
+        return <Actions 
+                  user={user} 
+                  onViewDetails={onViewDetails} 
+                  onEditUser={onEditUser} 
+                  onDeleteUser={onDeleteUser} 
+                  onResetPassword={onResetPassword}
+                  t={translate} 
+               />;
       },
     },
   ];

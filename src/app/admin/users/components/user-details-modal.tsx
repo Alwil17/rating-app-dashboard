@@ -1,83 +1,56 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { UserResponse } from "@/schema/user.schema"
-import { Calendar, Mail, Shield } from "lucide-react"
-import { format } from "date-fns"
-import { useQuery } from "@tanstack/react-query"
-import api from "@/utils/axios"
+"use client";
 
-interface UserDetailsModalProps {
-  user: UserResponse | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { UserResponse } from "@/schema/user.schema";
+import { format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Shield, Mail, Calendar } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-export function UserDetailsModal({ user, open, onOpenChange }: Readonly<UserDetailsModalProps>) {
-  const { data: activities } = useQuery({
-    queryKey: ['user-ratings', user?.id],
-    queryFn: async () => {
-      if (!user?.id) return []
-      const response = await api.get(`/users/${user.id}/ratings`)
-      return response.data
-    },
-    enabled: !!user,
-  })
+type UserDetailsModalProps = {
+  user: UserResponse | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
-  if (!user) return null
+export function UserDetailsModal({ user, open, onOpenChange }: UserDetailsModalProps) {
+  const { t } = useTranslation();
+
+  if (!user) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>User Details</DialogTitle>
+          <DialogTitle>{t('users.details.title')}</DialogTitle>
         </DialogHeader>
-
-        <div className="grid gap-6">
-          {/* User profile section */}
+        <div className="space-y-6">
           <div className="flex items-start gap-4">
             <Avatar className="h-16 w-16">
-              <AvatarImage src={user.image_url ?? undefined} />
-              <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarImage src={user.image_url ?? undefined} alt={user.name} />
+              <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
               <h2 className="text-xl font-semibold">{user.name}</h2>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                <span>{user.email}</span>
+              <div className="flex items-center text-muted-foreground">
+                <Shield className="h-4 w-4 mr-1" />
+                <span className="capitalize">{user.role || "user"}</span>
               </div>
             </div>
           </div>
 
-          {/* User details grid */}
-          <div className="grid gap-4">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span>Registered on {format(new Date(user.created_at), 'PPP')}</span>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Mail className="h-4 w-4" />
+              <span>{user.email}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-muted-foreground" />
-              <span>Role: <span className="capitalize">{user.role ?? 'User'}</span></span>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Calendar className="h-4 w-4" />
+              <span>{t('users.details.memberSince', { date: format(new Date(user.created_at), 'PPP') })}</span>
             </div>
           </div>
-
-          {/* Activity history */}
-          {activities && activities.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Recent Activity</h3>
-              <div className="space-y-2">
-                {activities.map((activity: any) => (
-                  <div key={activity.id} className="text-sm">
-                    <p>Rated {activity.item_id} with {activity.value} stars</p>
-                    <p className="text-muted-foreground">
-                      {format(new Date(activity.created_at), 'PPp')}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

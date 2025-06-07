@@ -1,0 +1,271 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "add": "Ajouter",
+    "remove": "Supprimer {{item}}",
+    "search": "Rechercher",
+    "confirm": "Confirmer",
+    "actions": "Actions",
+    "noData": "Aucune donnée",
+    "notAvailable": "N/D",
+    "create": "Créer",
+    "close": "Fermer",
+    "copy": "Copier dans le presse-papiers",
+    "openMenu": "Ouvrir le menu"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "items": "Articles",
+    "categories": "Catégories",
+    "ratings": "Évaluations",
+    "settings": "Paramètres",
+    "profile": "Profil"
+  },
+  "users": {
+    "title": "Gestion des utilisateurs",
+    "subtitle": "Gérez et organisez vos utilisateurs",
+    "addAdmin": "Ajouter un nouvel administrateur",
+    "resetPasswordText": "Réinitialiser le mot de passe",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+    "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.",
+    "passwordReset": "Le mot de passe a été réinitialisé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des utilisateurs",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
+    "columns": {
+      "name": "Nom",
+      "email": "Email",
+      "role": "Rôle",
+      "joined": "Inscrit le"
+    },
+    "actions": {
+      "copyId": "Copier l'ID",
+      "viewDetails": "Voir les détails",
+      "edit": "Modifier l'utilisateur"
+    },
+    "details": {
+      "title": "Détails de l'utilisateur",
+      "memberSince": "Membre depuis {{date}}"
+    },
+    "form": {
+      "createTitle": "Créer un nouvel administrateur",
+      "editTitle": "Modifier l'administrateur: {{name}}",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Entrez le nom de l'administrateur",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Entrez l'adresse email",
+      "passwordLabel": "Mot de passe",
+      "passwordLabelOptional": "Mot de passe (laisser vide pour conserver l'actuel)",
+      "passwordPlaceholder": "Entrez le mot de passe",
+      "imageUrlLabel": "URL de l'image de profil",
+      "imageUrlPlaceholder": "Entrez l'URL de l'image de profil (facultatif)"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe pour {{name}}",
+      "confirmation": "Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ? Un nouveau mot de passe temporaire sera généré.",
+      "success": "Le mot de passe a été réinitialisé avec succès. Veuillez partager ce mot de passe temporaire avec l'utilisateur.",
+      "confirm": "Réinitialiser le mot de passe"
+    }
+  },
+  "items": {
+    "title": "Gestion des articles",
+    "subtitle": "Gérez et organisez votre catalogue d'articles",
+    "addItem": "Ajouter un article",
+    "errorLoading": "Erreur lors du chargement des articles",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet article ?",
+    "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement l'article et toutes les données associées.",
+    "columns": {
+      "name": "Nom",
+      "categories": "Catégories",
+      "rating": "Évaluation",
+      "actions": "Actions"
+    },
+    "details": {
+      "title": "Détails de l'article",
+      "description": "Description",
+      "categories": "Catégories",
+      "tags": "Tags",
+      "ratings": "évaluations",
+      "noCategories": "Aucune catégorie attribuée",
+      "noTags": "Aucun tag attribué",
+      "noRatings": "Pas encore d'évaluations",
+      "created": "Créé le",
+      "lastUpdated": "Dernière mise à jour"
+    },
+    "form": {
+      "createTitle": "Créer un nouvel article",
+      "editTitle": "Modifier l'article: {{name}}",
+      "fields": {
+        "name": {
+          "label": "Nom",
+          "placeholder": "Entrez le nom de l'article"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez une description pour cet article"
+        },
+        "imageUrl": {
+          "label": "URL de l'image",
+          "placeholder": "Entrez l'URL de l'image (facultatif)"
+        }
+      },
+      "submitButton": "Enregistrer l'article",
+      "cancelButton": "Annuler",
+      "validation": {
+        "required": "Ce champ est obligatoire",
+        "maxLength": "Maximum {{count}} caractères"
+      }
+    },
+    "tagManager": {
+      "title": "Gérer les tags pour {{name}}",
+      "addTagPlaceholder": "Ajouter un tag...",
+      "noTags": "Aucun tag ajouté"
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "subtitle": "Voici un aperçu des performances de votre système et de l'activité récente",
+    "analytics": "Analytique",
+    "overview": "Aperçu",
+    "users": "Utilisateurs",
+    "ratings": "Évaluations",
+    "metrics": {
+      "totalUsers": "Nombre d'utilisateurs",
+      "totalRatings": "Nombre d'évaluations",
+      "recentActivity": "Activité récente",
+      "allTime": "Tout temps",
+      "activeUsers": "Utilisateurs actifs",
+      "last30Days": "30 derniers jours",
+      "newUsers": "Nouveaux utilisateurs",
+      "today": "Aujourd'hui",
+      "avgRatings": "Moy. évaluations",
+      "perUser": "Par utilisateur"
+    },
+    "charts": {
+      "categoryDistribution": {
+        "title": "Évaluations par catégorie",
+        "subtitle": "Distribution par catégories",
+        "noData": "Aucune catégorie évaluée disponible",
+        "showingTop": "Affichage des {{count}} meilleures catégories avec évaluations",
+        "category": "Catégorie"
+      },
+      "topItems": {
+        "title": "Articles les mieux notés",
+        "subtitle": "Articles les plus populaires",
+        "noData": "Aucun article évalué disponible",
+        "showingCount": "Affichage de {{count}} articles avec évaluations",
+        "users": "Utilisateurs"
+      },
+      "ratingTrend": {
+        "title": "Évolution des évaluations",
+        "subtitle": "Tendances quotidiennes des évaluations",
+        "ratings": "Évaluations"
+      },
+      "detailedRatings": {
+        "title": "Analytique détaillée des évaluations",
+        "viewAll": "Voir toutes les évaluations",
+        "distribution": {
+          "title": "Distribution des évaluations"
+        },
+        "recentActivity": {
+          "title": "Activité récente d'évaluation"
+        },
+        "insights": {
+          "averageRating": "Évaluation moyenne",
+          "basedOn": "Basée sur {{count}} évaluations",
+          "topCategory": "Catégorie la mieux notée",
+          "withCount": "Avec {{count}} évaluations",
+          "noRatings": "Aucune évaluation disponible"
+        }
+      }
+    },
+    "userAnalytics": {
+      "title": "Analytique des utilisateurs",
+      "viewAllUsers": "Voir tous les utilisateurs",
+      "growthChart": {
+        "title": "Croissance des utilisateurs",
+        "users": "Utilisateurs"
+      },
+      "activeUsers": {
+        "title": "Utilisateurs les plus actifs",
+        "ratings": "Évaluations",
+        "activity": "Activité",
+        "lastActive": "Dernière activité"
+      },
+      "recentRegistrations": {
+        "title": "Inscriptions récentes",
+        "userJoined": "{{count}} nouvel utilisateur inscrit",
+        "userJoined_plural": "{{count}} nouveaux utilisateurs inscrits"
+      }
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Consultez et gérez vos informations personnelles"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "rememberMe": "Se souvenir de moi"
+  },
+  "categories": {
+    "title": "Gestion des catégories",
+    "subtitle": "Gérez et organisez vos catégories",
+    "addNew": "Ajouter une nouvelle catégorie",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des catégories",
+    "columns": {
+      "name": "Nom",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "Créer une catégorie",
+      "editTitle": "Modifier une catégorie",
+      "namePlaceholder": "Entrez le nom de la catégorie",
+      "descriptionPlaceholder": "Entrez la description de la catégorie",
+      "submitButton": "Enregistrer la catégorie",
+      "cancelButton": "Annuler"
+    },
+    "delete": {
+      "title": "Supprimer la catégorie",
+      "message": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action ne peut pas être annulée."
+    }
+  },
+  "tags": {
+    "title": "Gestion des tags",
+    "subtitle": "Gérez et organisez vos tags",
+    "addNew": "Ajouter un nouveau tag",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des tags",
+    "columns": {
+      "name": "Nom",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "Créer un tag",
+      "editTitle": "Modifier un tag",
+      "namePlaceholder": "Entrez le nom du tag",
+      "submitButton": "Enregistrer le tag",
+      "cancelButton": "Annuler"
+    },
+    "delete": {
+      "title": "Supprimer le tag",
+      "message": "Êtes-vous sûr de vouloir supprimer ce tag ? Cette action ne peut pas être annulée."
+    }
+  }
+}

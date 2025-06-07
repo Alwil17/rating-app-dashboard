@@ -5,6 +5,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTranslation } from "react-i18next";
 
 interface CategoryChartProps {
   data: Array<{ name: string; value: number }>;
@@ -12,6 +13,7 @@ interface CategoryChartProps {
 }
 
 export function CategoryDistributionChart({ data, isLoading }: Readonly<CategoryChartProps>) {
+  const { t } = useTranslation();
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
   
   // Filter out categories with zero values and limit to top 7 categories if there are too many
@@ -28,11 +30,11 @@ export function CategoryDistributionChart({ data, isLoading }: Readonly<Category
     return (
       <Card className="lg:col-span-2">
         <CardHeader>
-          <CardTitle>Ratings by Category</CardTitle>
-          <CardDescription>Distribution across categories</CardDescription>
+          <CardTitle>{t('dashboard.charts.categoryDistribution.title')}</CardTitle>
+          <CardDescription>{t('dashboard.charts.categoryDistribution.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-center h-[300px] text-muted-foreground">
-          No rated categories available
+          {t('dashboard.charts.categoryDistribution.noData')}
         </CardContent>
       </Card>
     );
@@ -41,11 +43,11 @@ export function CategoryDistributionChart({ data, isLoading }: Readonly<Category
   return (
     <Card className="lg:col-span-2">
       <CardHeader>
-        <CardTitle>Ratings by Category</CardTitle>
+        <CardTitle>{t('dashboard.charts.categoryDistribution.title')}</CardTitle>
         <CardDescription>
           {filteredData.length < data.length 
-            ? `Showing top ${filteredData.length} categories with ratings`
-            : "Distribution across categories"}
+            ? t('dashboard.charts.categoryDistribution.showingTop', { count: filteredData.length })
+            : t('dashboard.charts.categoryDistribution.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent className="h-[300px]">
@@ -77,7 +79,10 @@ export function CategoryDistributionChart({ data, isLoading }: Readonly<Category
                     ))}
                   </Pie>
                   <Tooltip 
-                    formatter={(value, name) => [`${value} (${((value as number / totalValue) * 100).toFixed(1)}%)`, name]}
+                    formatter={(value, name) => [
+                      `${value} (${((value as number / totalValue) * 100).toFixed(1)}%)`, 
+                      t('dashboard.charts.categoryDistribution.category')
+                    ]}
                     contentStyle={{
                       backgroundColor: "var(--background)",
                       borderColor: "var(--border)",

@@ -14,10 +14,12 @@ import { AdminFormModal } from "./components/admin-form-modal";
 import { toast } from "sonner";
 import { useDeleteUserMutation, useResetPasswordMutation } from "@/hooks/queries/use-admin.query";
 import { ResetPasswordDialog } from "./components/reset-password-dialog";
+import { useTranslation } from "react-i18next";
 
 export default function AdminUsersPage() {
     const { setPageTitle } = useBreadcrumb();
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
     const [adminModalOpen, setAdminModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
     const [editingAdmin, setEditingAdmin] = useState<UserResponse | null>(null);
@@ -29,8 +31,8 @@ export default function AdminUsersPage() {
     const resetPasswordMutation = useResetPasswordMutation();
 
     useEffect(() => {
-        setPageTitle('Users Management');
-    }, [setPageTitle]);
+        setPageTitle(t('users.title'));
+    }, [setPageTitle, t]);
 
     const { data: users, isLoading, error } = useQuery<UserResponse[]>({
         queryKey: ['users'],
@@ -54,7 +56,7 @@ export default function AdminUsersPage() {
     const handleDeleteUser = (user: UserResponse) => {
         deleteMutation.mutate(user.id, {
             onSuccess: () => {
-                toast.success(`${user.name} has been deleted successfully`);
+                toast.success(t('users.deleteSuccess', { name: user.name }));
                 queryClient.invalidateQueries({ queryKey: ['users'] });
                 setSelectedUser(null);
             },
@@ -91,7 +93,7 @@ export default function AdminUsersPage() {
     if (error) {
         return (
             <div className="flex flex-col items-center justify-center h-96">
-                <p className="text-destructive">Error loading users list</p>
+                <p className="text-destructive">{t('users.errorLoading')}</p>
                 <p className="text-sm text-muted-foreground">{(error as Error).message}</p>
             </div>
         );
@@ -100,10 +102,10 @@ export default function AdminUsersPage() {
     return (
         <div>
             <PageHeader
-                title="Users Management"
-                subtitle="Manage and organize your users"
+                title={t('users.title')}
+                subtitle={t('users.subtitle')}
                 action={{
-                    label: "Add new admin",
+                    label: t('users.addAdmin'),
                     onClick: handleAddNew,
                 }}
             />
@@ -119,7 +121,8 @@ export default function AdminUsersPage() {
                             (user) => setSelectedUser(user),
                             handleEditUser,
                             handleDeleteUser,
-                            handleResetPassword
+                            handleResetPassword,
+                            t
                         )}
                         data={users || []}
                     />

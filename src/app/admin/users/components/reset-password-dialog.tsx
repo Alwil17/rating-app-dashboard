@@ -1,6 +1,7 @@
+"use client";
+
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -9,20 +10,19 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { UserResponse } from "@/schema/user.schema";
-import { Clipboard, Loader2 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
+import { Loader2, Copy, Check } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-interface ResetPasswordDialogProps {
+type ResetPasswordDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   user: UserResponse | null;
   isLoading: boolean;
   tempPassword: string | null;
   onConfirm: () => void;
-}
+};
 
 export function ResetPasswordDialog({
   open,
@@ -31,73 +31,62 @@ export function ResetPasswordDialog({
   isLoading,
   tempPassword,
   onConfirm,
-}: Readonly<ResetPasswordDialogProps>) {
+}: ResetPasswordDialogProps) {
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
-  // Debug logging to help troubleshoot
-  useEffect(() => {
-    console.log("Dialog open:", open);
-    console.log("tempPassword:", tempPassword);
-  }, [open, tempPassword]);
+  if (!user) return null;
 
-  const copyToClipboard = () => {
+  const handleCopyPassword = () => {
     if (tempPassword) {
       navigator.clipboard.writeText(tempPassword);
       setCopied(true);
-      toast.success("Password copied to clipboard");
-      setTimeout(() => setCopied(false), 3000);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={(newState) => {
-      // Only close if we're showing the password already or user is canceling
-      if (!newState || tempPassword) {
-        onOpenChange(newState);
-      }
-    }}>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Reset Password for {user?.name}
+            {t('users.resetPassword.title', { name: user.name })}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {tempPassword
-              ? "A temporary password has been generated. Please share this with the user."
-              : "This will reset the user's password to a temporary one. They will need to change it on their next login."}
+            {tempPassword 
+              ? t('users.resetPassword.success')
+              : t('users.resetPassword.confirmation')}
           </AlertDialogDescription>
         </AlertDialogHeader>
-
-        {tempPassword && (
-          <div className="flex items-center gap-2 my-4">
-            <Input
-              value={tempPassword}
-              readOnly
-              className="font-mono"
-              data-testid="temp-password-input"
-            />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={copyToClipboard}
+        
+        {tempPassword ? (
+          <div className="bg-muted p-3 rounded-md flex items-center justify-between">
+            <code className="text-sm font-mono">{tempPassword}</code>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleCopyPassword} 
+              className="h-8 w-8 p-0"
             >
-              <Clipboard className={`h-4 w-4 ${copied ? 'text-green-500' : ''}`} />
+              {copied ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+              <span className="sr-only">{t('common.copy')}</span>
             </Button>
           </div>
-        )}
+        ) : null}
 
         <AlertDialogFooter>
           <AlertDialogCancel>
-            {tempPassword ? "Close" : "Cancel"}
+            {tempPassword ? t('common.close') : t('common.cancel')}
           </AlertDialogCancel>
           {!tempPassword && (
-            <AlertDialogAction
-              onClick={onConfirm}
-              disabled={isLoading}
-            >
+            <Button onClick={onConfirm} disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Reset Password
-            </AlertDialogAction>
+              {t('users.resetPassword.confirm')}
+            </Button>
           )}
         </AlertDialogFooter>
       </AlertDialogContent>

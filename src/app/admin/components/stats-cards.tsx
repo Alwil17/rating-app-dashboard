@@ -3,6 +3,7 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, ArrowUpRight, LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface StatCardProps {
   label: string;
@@ -13,12 +14,16 @@ interface StatCardProps {
   link: string;
   isLoading: boolean;
   error: string | null;
+  translationKey?: string;
 }
 
 export function StatCard({ 
-  label, value, icon: Icon, color, bgColor, link, isLoading, error 
+  label, value, icon: Icon, color, bgColor, link, isLoading, error, translationKey 
 }: Readonly<StatCardProps>) {
   const router = useRouter();
+  const { t } = useTranslation();
+  
+  const displayLabel = translationKey ? t(translationKey) : label;
   
   return (
     <Card 
@@ -32,7 +37,7 @@ export function StatCard({
           <div className={`p-2 rounded-full w-fit ${bgColor} ${color}`}>
           <Icon className="h-5 w-5" />
         </div>
-          <span>{label}</span>
+          <span>{displayLabel}</span>
           <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
         </CardTitle>
         <CardDescription>
@@ -60,12 +65,15 @@ interface StatsCardsProps {
     color: string;
     bgColor: string;
     link: string;
+    translationKey?: string;
   }>;
   isLoading: boolean;
   error: string | null;
 }
 
 export function StatsCards({ stats, isLoading, error }: Readonly<StatsCardsProps>) {
+  const { t } = useTranslation();
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       {stats.map((stat) => (
@@ -73,7 +81,7 @@ export function StatsCards({ stats, isLoading, error }: Readonly<StatsCardsProps
           key={stat.label}
           {...stat}
           isLoading={isLoading}
-          error={error}
+          error={error ? t('common.error') : null}
         />
       ))}
     </div>

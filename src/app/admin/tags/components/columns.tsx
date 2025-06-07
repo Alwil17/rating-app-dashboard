@@ -20,8 +20,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "@/components/ui/datatable-column-header";
@@ -34,84 +32,100 @@ interface ActionsProps {
 
 const Actions = ({ tag, onEditTag, onDeleteTag }: ActionsProps) => {
     const { user } = useAuth();
-    const isAdmin = user?.role === "admin";
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigator.clipboard.writeText(tag.id.toString())}>
-                    Copy ID
-                </DropdownMenuItem>
-                {/* Only show edit option if user is admin */}
-                {isAdmin && (
+        <AlertDialog>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => onEditTag(tag)}>
                         Edit tag
                     </DropdownMenuItem>
-                )}
-                <DropdownMenuSeparator />
-                {/* Only show delete option if user is admin */}
-                {isAdmin && (
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive">
-                                Supprimer
-                            </DropdownMenuItem>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    Cette action est irréversible. Cela supprimera définitivement le tag.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Annuler</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => onDeleteTag(tag)}>Confirmer</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                )}
-            </DropdownMenuContent>
-        </DropdownMenu>
+                    <AlertDialogTrigger asChild>
+                        <DropdownMenuItem className="text-destructive">
+                            Supprimer
+                        </DropdownMenuItem>
+                    </AlertDialogTrigger>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Cette action est irréversible. Cela supprimera définitivement le tag.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => onDeleteTag(tag)}>Confirmer</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     )
 }
 
 export function getTagColumns(
     onEditTag: (tag: Tag) => void,
-    onDeleteTag: (tag: Tag) => void
+    onDeleteTag: (tag: Tag) => void,
+    t: (key: string, options?: any) => string // Add t parameter
 ): ColumnDef<Tag>[] {
 
     return [
         {
             accessorKey: "name",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Name" />
+                <DataTableColumnHeader column={column} title={t('tags.columns.name')} />
             ),
-            cell: ({ row }) => {
-                const tag = row.original
-                return (
-                    <div className="flex items-center gap-3">
-                        <div>
-                            <p className="font-medium">{tag.name}</p>
-                        </div>
-                    </div>
-                )
-            },
         },
         {
             id: "actions",
-
+            header: ({ column }) => (
+                <DataTableColumnHeader column={column} title={t('tags.columns.actions')} />
+            ),
             cell: ({ row }) => {
                 const tag = row.original
-                return <Actions tag={tag} onEditTag={onEditTag} onDeleteTag={onDeleteTag} />
+
+                return (
+                    <AlertDialog>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">{t('common.openMenu')}</span>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => onEditTag(tag)}>
+                                    {t('common.edit')}
+                                </DropdownMenuItem>
+                                <AlertDialogTrigger asChild>
+                                    <DropdownMenuItem className="text-destructive">
+                                        {t('common.delete')}
+                                    </DropdownMenuItem>
+                                </AlertDialogTrigger>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>{t('tags.delete.title')}</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    {t('tags.delete.message')}
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => onDeleteTag(tag)}>
+                                    {t('common.confirm')}
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                );
             },
         },
     ];

@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Category } from "@/schema/category.schema";
+import { useTranslation } from "react-i18next";
 
 type CategoryManagerProps = {
   open: boolean;
@@ -31,6 +32,7 @@ export function CategoryManager({
   item,
   onSuccess,
 }: Readonly<CategoryManagerProps>) {
+  const { t } = useTranslation();
   const { data: categories, isLoading: loadingCategories } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const updateMutation = useUpdateItemCategoriesMutation(item?.id || 0);
@@ -64,7 +66,9 @@ export function CategoryManager({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Manage Categories for {item?.name}</DialogTitle>
+          <DialogTitle>
+            {t("items.categoryManager.title", { name: item?.name })}
+          </DialogTitle>
         </DialogHeader>
         {loadingCategories ? (
           <div className="flex justify-center py-8">
@@ -93,15 +97,19 @@ export function CategoryManager({
                 ))
               ) : (
                 <p className="text-center text-muted-foreground">
-                  No categories available
+                  {t("items.categoryManager.noCategories")}
                 </p>
               )}
             </div>
           </ScrollArea>
         )}
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+          >
+            {t("common.cancel")}
           </Button>
           <Button
             onClick={handleSave}
@@ -110,7 +118,7 @@ export function CategoryManager({
             {updateMutation.isPending && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Save changes
+            {t("common.saveChanges")}
           </Button>
         </DialogFooter>
       </DialogContent>
