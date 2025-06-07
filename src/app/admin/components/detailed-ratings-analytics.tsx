@@ -210,7 +210,7 @@ export function DetailedRatingsAnalytics() {
                   <div className="text-2xl font-bold mr-2">{stats?.average.toFixed(1)}</div>
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => {
-                      const fullStar = Math.floor(stats?.average || 0);
+                      const fullStar = Math.floor(stats?.average ?? 0);
                       const hasHalfStar = stats?.average && (stats.average % 1) >= 0.5;
                       let starClass = '';
                       if (i <= fullStar) {
