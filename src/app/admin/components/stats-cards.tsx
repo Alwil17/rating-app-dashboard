@@ -27,10 +27,11 @@ export function StatCard({
     >
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       <CardHeader className="pb-2">
-        <div className={`p-2 rounded-full w-fit ${bgColor} ${color} mb-2`}>
+        
+        <CardTitle className="flex items-center justify-start gap-2 group-hover:text-primary transition-colors duration-200">
+          <div className={`p-2 rounded-full w-fit ${bgColor} ${color}`}>
           <Icon className="h-5 w-5" />
         </div>
-        <CardTitle className="flex items-center justify-between">
           <span>{label}</span>
           <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
         </CardTitle>

@@ -5,11 +5,12 @@ import { useBreadcrumb } from '@/contexts/breadcrumb.context';
 import { useEffect } from 'react';
 import { useStats } from '@/hooks/useStats';
 import { useChartData } from '@/hooks/useChartData';
-import { Users, Star, Activity } from 'lucide-react';
+import { Users, Star, Activity, Loader2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Import extracted components
 import { StatsCards } from './components/stats-cards';
@@ -17,6 +18,8 @@ import { RatingTrendChart } from './components/rating-trend-chart';
 import { TopItemsChart } from './components/top-items-chart';
 import { CategoryDistributionChart } from './components/category-distribution-chart';
 import { RecentActivity } from './components/recent-activity';
+// Import the new component
+import { DetailedRatingsAnalytics } from './components/detailed-ratings-analytics';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
@@ -81,7 +84,7 @@ export default function AdminDashboardPage() {
       link: '/admin/ratings',
     },
     {
-      label: 'Recent Activity',
+      label: 'Recent Ratings',
       value: isLoading ? '-' : recentActivity.toString(),
       icon: Activity,
       color: 'text-green-600 dark:text-green-400',
@@ -134,19 +137,7 @@ export default function AdminDashboardPage() {
         </TabsContent>
 
         <TabsContent value="ratings" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Detailed Rating Analytics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>More detailed rating analytics will be displayed here.</p>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" onClick={() => router.push('/admin/ratings')}>
-                View All Ratings
-              </Button>
-            </CardFooter>
-          </Card>
+          <DetailedRatingsAnalytics />
         </TabsContent>
 
         <TabsContent value="users" className="space-y-4">
@@ -165,9 +156,6 @@ export default function AdminDashboardPage() {
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Recent Activity */}
-      <RecentActivity />
     </div>
   );
 }
