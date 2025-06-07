@@ -49,10 +49,10 @@ export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>)
                 layout="vertical"
                 margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
                 <XAxis 
                   type="number" 
-                  stroke="hsl(var(--muted-foreground))" 
+                  stroke="var(--muted-foreground)" 
                   tickLine={false}
                   axisLine={false}
                 />
@@ -60,22 +60,24 @@ export function TopItemsChart({ data, isLoading }: Readonly<TopItemsChartProps>)
                   dataKey="item" 
                   type="category" 
                   width={100}
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="var(--muted-foreground)"
                   tickLine={false}
                   axisLine={false}
                 />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: "hsl(var(--background))",
-                    borderColor: "hsl(var(--border))",
+                    backgroundColor: "var(--background)",
+                    borderColor: "var(--border)",
+                    color: "var(--foreground)",
                     borderRadius: "0.5rem",
                     boxShadow: "0 1px 2px hsla(var(--shadow))",
                   }}
                 />
                 <Bar 
                   dataKey="users" 
-                  fill="hsl(var(--primary))" 
+                  fill="var(--primary)" 
                   radius={[0, 4, 4, 0]}
+                  name="Users"
                 />
               </BarChart>
             </ResponsiveContainer>

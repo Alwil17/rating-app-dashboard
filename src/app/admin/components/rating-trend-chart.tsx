@@ -10,7 +10,7 @@ interface RatingTrendChartProps {
   isLoading: boolean;
 }
 
-export function RatingTrendChart({ data, isLoading }: RatingTrendChartProps) {
+export function RatingTrendChart({ data, isLoading }: Readonly<RatingTrendChartProps>) {
   return (
     <Card>
       <CardHeader>
@@ -30,26 +30,31 @@ export function RatingTrendChart({ data, isLoading }: RatingTrendChartProps) {
             >
               <defs>
                 <linearGradient id="colorRatings" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                  <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
               <XAxis 
                 dataKey="month" 
                 tickFormatter={(value) => {
                   const date = new Date(value);
                   return format(date, 'MMM d');
                 }}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="var(--muted-foreground)"
                 tickLine={false}
                 axisLine={false}
               />
-              <YAxis stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} />
+              <YAxis 
+                stroke="var(--muted-foreground)" 
+                tickLine={false} 
+                axisLine={false}
+              />
               <Tooltip 
                 contentStyle={{
-                  backgroundColor: "hsl(var(--background))",
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
+                  color: "var(--foreground)",
                   borderRadius: "0.5rem",
                   boxShadow: "0 1px 2px hsla(var(--shadow))",
                 }}
@@ -61,9 +66,10 @@ export function RatingTrendChart({ data, isLoading }: RatingTrendChartProps) {
               <Area 
                 type="monotone" 
                 dataKey="ratings" 
-                stroke="hsl(var(--primary))" 
+                stroke="var(--primary)" 
                 fillOpacity={1} 
                 fill="url(#colorRatings)" 
+                name="Ratings" 
               />
             </AreaChart>
           </ResponsiveContainer>

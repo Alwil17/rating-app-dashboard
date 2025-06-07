@@ -2,7 +2,6 @@
 
 import { ThemeProvider } from "@/components/theme-provider"
 import { Geist, Geist_Mono } from "next/font/google";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/contexts/auth.context';
 import "./globals.css";
