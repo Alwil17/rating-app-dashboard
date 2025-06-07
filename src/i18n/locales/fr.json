@@ -80,7 +80,9 @@
       "topItems": {
         "title": "Articles les mieux notés",
         "subtitle": "Articles les plus populaires",
-        "noData": "Aucun article évalué disponible"
+        "noData": "Aucun article évalué disponible",
+        "showingCount": "Affichage de {{count}} articles avec évaluations",
+        "users": "Utilisateurs"
       },
       "ratingTrend": {
         "title": "Évolution des évaluations",
