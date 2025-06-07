@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "confirm": "Confirmer",
+    "actions": "Actions"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "items": "Articles",
+    "categories": "Catégories",
+    "ratings": "Évaluations",
+    "settings": "Paramètres",
+    "profile": "Profil"
+  },
+  "users": {
+    "title": "Gestion des utilisateurs",
+    "subtitle": "Gérez et organisez vos utilisateurs",
+    "addAdmin": "Ajouter un nouvel administrateur",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+    "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.",
+    "passwordReset": "Le mot de passe a été réinitialisé avec succès",
+    "columns": {
+      "name": "Nom",
+      "email": "Email",
+      "role": "Rôle",
+      "joined": "Inscrit le"
+    }
+  },
+  "items": {
+    "title": "Gestion des articles",
+    "subtitle": "Gérez et organisez votre catalogue d'articles",
+    "addItem": "Ajouter un article",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet article ?",
+    "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement l'article et toutes les données associées.",
+    "columns": {
+      "name": "Nom",
+      "categories": "Catégories",
+      "rating": "Évaluation"
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "subtitle": "Voici un aperçu des performances de votre système et de l'activité récente",
+    "analytics": "Analytique",
+    "overview": "Aperçu",
+    "users": "Utilisateurs",
+    "ratings": "Évaluations",
+    "metrics": {
+      "totalUsers": "Total d'utilisateurs",
+      "allTime": "Tout temps",
+      "activeUsers": "Utilisateurs actifs",
+      "last30Days": "30 derniers jours",
+      "newUsers": "Nouveaux utilisateurs",
+      "today": "Aujourd'hui",
+      "avgRatings": "Moy. évaluations",
+      "perUser": "Par utilisateur"
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Consultez et gérez vos informations personnelles"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "rememberMe": "Se souvenir de moi"
+  }
+}
