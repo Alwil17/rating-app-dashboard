@@ -81,7 +81,7 @@ export default function AdminDashboardPage() {
       link: '/admin/ratings',
     },
     {
-      label: 'Recent Activity',
+      label: 'Recent Ratings',
       value: isLoading ? '-' : recentActivity.toString(),
       icon: Activity,
       color: 'text-green-600 dark:text-green-400',
@@ -165,9 +165,6 @@ export default function AdminDashboardPage() {
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Recent Activity */}
-      <RecentActivity />
     </div>
   );
 }
