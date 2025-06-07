@@ -7,7 +7,6 @@ import { useStats } from '@/hooks/useStats';
 import { useChartData } from '@/hooks/useChartData';
 import { Users, Star, Activity } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useRouter } from "next/navigation";
 import { useTranslation } from 'react-i18next';
 
 // Import extracted components
