@@ -32,7 +32,7 @@
     "title": "Users Management",
     "subtitle": "Manage and organize your users",
     "addAdmin": "Add new admin",
-    "resetPassword": "Reset Password",
+    "resetPasswordText": "Reset Password",
     "deleteConfirm": "Are you sure you want to delete this user?",
     "deleteWarning": "This action cannot be undone. This will permanently delete the account and all associated data.",
     "passwordReset": "Password has been reset successfully",

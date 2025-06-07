@@ -32,7 +32,7 @@
     "title": "Gestion des utilisateurs",
     "subtitle": "Gérez et organisez vos utilisateurs",
     "addAdmin": "Ajouter un nouvel administrateur",
-    "resetPassword": "Réinitialiser le mot de passe",
+    "resetPasswordText": "Réinitialiser le mot de passe",
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
     "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement le compte et ses données de nos serveurs.",
     "passwordReset": "Le mot de passe a été réinitialisé avec succès",
