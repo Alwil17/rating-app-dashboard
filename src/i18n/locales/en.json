@@ -84,7 +84,8 @@
       },
       "ratingTrend": {
         "title": "Ratings Over Time",
-        "subtitle": "Daily rating trends" 
+        "subtitle": "Daily rating trends",
+        "ratings": "Ratings"
       }
     }
   },
