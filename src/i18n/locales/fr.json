@@ -68,6 +68,24 @@
       "today": "Aujourd'hui",
       "avgRatings": "Moy. évaluations",
       "perUser": "Par utilisateur"
+    },
+    "charts": {
+      "categoryDistribution": {
+        "title": "Évaluations par catégorie",
+        "subtitle": "Distribution par catégories",
+        "noData": "Aucune catégorie évaluée disponible",
+        "showingTop": "Affichage des {{count}} meilleures catégories avec évaluations",
+        "category": "Catégorie"
+      },
+      "topItems": {
+        "title": "Articles les mieux notés",
+        "subtitle": "Articles les plus populaires",
+        "noData": "Aucun article évalué disponible"
+      },
+      "ratingTrend": {
+        "title": "Évolution des évaluations",
+        "subtitle": "Tendances quotidiennes des évaluations"
+      }
     }
   },
   "profile": {
