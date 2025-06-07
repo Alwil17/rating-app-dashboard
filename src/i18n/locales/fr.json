@@ -143,5 +143,29 @@
     "password": "Mot de passe",
     "forgotPassword": "Mot de passe oublié ?",
     "rememberMe": "Se souvenir de moi"
+  },
+  "categories": {
+    "title": "Gestion des catégories",
+    "subtitle": "Gérez et organisez vos catégories",
+    "addNew": "Ajouter une nouvelle catégorie",
+    "deleteSuccess": "{{name}} a été supprimé avec succès",
+    "errorLoading": "Erreur lors du chargement de la liste des catégories",
+    "columns": {
+      "name": "Nom",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "Créer une catégorie",
+      "editTitle": "Modifier une catégorie",
+      "namePlaceholder": "Entrez le nom de la catégorie",
+      "descriptionPlaceholder": "Entrez la description de la catégorie",
+      "submitButton": "Enregistrer la catégorie",
+      "cancelButton": "Annuler"
+    },
+    "delete": {
+      "title": "Supprimer la catégorie",
+      "message": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action ne peut pas être annulée."
+    }
   }
 }

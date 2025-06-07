@@ -143,5 +143,29 @@
     "password": "Password",
     "forgotPassword": "Forgot password?",
     "rememberMe": "Remember me"
+  },
+  "categories": {
+    "title": "Categories Management",
+    "subtitle": "Manage and organize your categories",
+    "addNew": "Add new category",
+    "deleteSuccess": "{{name}} has been deleted successfully",
+    "errorLoading": "Error loading categories list",
+    "columns": {
+      "name": "Name",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "Create Category",
+      "editTitle": "Edit Category",
+      "namePlaceholder": "Enter category name",
+      "descriptionPlaceholder": "Enter category description",
+      "submitButton": "Save Category",
+      "cancelButton": "Cancel"
+    },
+    "delete": {
+      "title": "Delete Category",
+      "message": "Are you sure you want to delete this category? This action cannot be undone."
+    }
   }
 }
