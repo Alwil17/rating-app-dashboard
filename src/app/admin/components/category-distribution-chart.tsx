@@ -79,8 +79,8 @@ export function CategoryDistributionChart({ data, isLoading }: Readonly<Category
                   <Tooltip 
                     formatter={(value, name) => [`${value} (${((value as number / totalValue) * 100).toFixed(1)}%)`, name]}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--background))",
-                      borderColor: "hsl(var(--border))",
+                      backgroundColor: "var(--background)",
+                      borderColor: "var(--border)",
                       borderRadius: "0.5rem",
                       boxShadow: "0 1px 2px hsla(var(--shadow))",
                     }}
