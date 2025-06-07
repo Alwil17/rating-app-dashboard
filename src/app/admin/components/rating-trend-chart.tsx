@@ -10,7 +10,7 @@ interface RatingTrendChartProps {
   isLoading: boolean;
 }
 
-export function RatingTrendChart({ data, isLoading }: RatingTrendChartProps) {
+export function RatingTrendChart({ data, isLoading }: Readonly<RatingTrendChartProps>) {
   return (
     <Card>
       <CardHeader>
