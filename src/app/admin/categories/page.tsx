@@ -12,17 +12,19 @@ import { getCategoryColumns } from "./components/columns";
 import { toast } from "sonner";
 import { useDeleteCategoryMutation } from "@/hooks/queries/use-category.query";
 import { CategoryFormModal } from "./components/category-form-modal";
+import { useTranslation } from "react-i18next";
 
-export default function AdmincategoriesPage() {
+export default function AdminCategoriesPage() {
     const { setPageTitle } = useBreadcrumb();
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const deleteMutation = useDeleteCategoryMutation();
 
     useEffect(() => {
-        setPageTitle('Categories Management');
-    }, [setPageTitle]);
+        setPageTitle(t('categories.title'));
+    }, [setPageTitle, t]);
 
     const { data: categories, isLoading, error } = useQuery<Category[]>({
         queryKey: ['categories'],
@@ -46,7 +48,7 @@ export default function AdmincategoriesPage() {
     const handleDeleteCategory = (category: Category) => {
         deleteMutation.mutate(category.id, {
             onSuccess: () => {
-                toast.success(`${category.name} has been deleted successfully`);
+                toast.success(t('categories.deleteSuccess', { name: category.name }));
                 queryClient.invalidateQueries({ queryKey: ['categories'] });
             },
             onError: () => {
@@ -62,7 +64,7 @@ export default function AdmincategoriesPage() {
     if (error) {
         return (
             <div className="flex flex-col items-center justify-center h-96">
-                <p className="text-destructive">Error loading categories list</p>
+                <p className="text-destructive">{t('categories.errorLoading')}</p>
                 <p className="text-sm text-muted-foreground">{(error as Error).message}</p>
             </div>
         );
@@ -71,10 +73,10 @@ export default function AdmincategoriesPage() {
     return (
         <div>
             <PageHeader
-                title="Categories Management"
-                subtitle="Manage and organize your categories"
+                title={t('categories.title')}
+                subtitle={t('categories.subtitle')}
                 action={{
-                    label: "Add new category",
+                    label: t('categories.addNew'),
                     onClick: handleAddNew,
                 }}
             />
