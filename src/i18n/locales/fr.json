@@ -11,7 +11,8 @@
     "search": "Rechercher",
     "confirm": "Confirmer",
     "actions": "Actions",
-    "noData": "Aucune donnée"
+    "noData": "Aucune donnée",
+    "notAvailable": "N/D"
   },
   "navigation": {
     "dashboard": "Tableau de bord",
@@ -108,6 +109,25 @@
           "withCount": "Avec {{count}} évaluations",
           "noRatings": "Aucune évaluation disponible"
         }
+      }
+    },
+    "userAnalytics": {
+      "title": "Analytique des utilisateurs",
+      "viewAllUsers": "Voir tous les utilisateurs",
+      "growthChart": {
+        "title": "Croissance des utilisateurs",
+        "users": "Utilisateurs"
+      },
+      "activeUsers": {
+        "title": "Utilisateurs les plus actifs",
+        "ratings": "Évaluations",
+        "activity": "Activité",
+        "lastActive": "Dernière activité"
+      },
+      "recentRegistrations": {
+        "title": "Inscriptions récentes",
+        "userJoined": "{{count}} nouvel utilisateur inscrit",
+        "userJoined_plural": "{{count}} nouveaux utilisateurs inscrits"
       }
     }
   },

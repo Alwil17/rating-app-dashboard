@@ -11,7 +11,8 @@
     "search": "Search",
     "confirm": "Confirm",
     "actions": "Actions",
-    "noData": "No data"
+    "noData": "No data",
+    "notAvailable": "N/A"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -108,6 +109,25 @@
           "withCount": "With {{count}} ratings",
           "noRatings": "No ratings available"
         }
+      }
+    },
+    "userAnalytics": {
+      "title": "User Analytics",
+      "viewAllUsers": "View All Users",
+      "growthChart": {
+        "title": "User Growth",
+        "users": "Users"
+      },
+      "activeUsers": {
+        "title": "Most Active Users",
+        "ratings": "Ratings",
+        "activity": "Activity",
+        "lastActive": "Last active"
+      },
+      "recentRegistrations": {
+        "title": "Recent Registrations",
+        "userJoined": "{{count}} new user joined",
+        "userJoined_plural": "{{count}} new users joined"
       }
     }
   },
