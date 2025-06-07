@@ -80,7 +80,9 @@
       "topItems": {
         "title": "Top Items by User Rating",
         "subtitle": "Most popular items",
-        "noData": "No rated items available"
+        "noData": "No rated items available",
+        "showingCount": "Showing {{count}} items with ratings",
+        "users": "Users"
       },
       "ratingTrend": {
         "title": "Ratings Over Time",
