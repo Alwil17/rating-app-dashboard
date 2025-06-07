@@ -6,9 +6,9 @@ import { Loader2, Users, TrendingUp, Activity, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/utils/axios";
-import { AreaChart, BarChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Bar } from "recharts";
+import { AreaChart, BarChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Bar } from "recharts";
 import { format, subDays } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface UserGrowthData {
   date: string;
@@ -100,28 +100,28 @@ export function DetailedUserAnalytics() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard 
                 title="Total Users" 
-                value={userStats?.total_users || 0} 
+                value={userStats?.total_users ?? 0} 
                 icon={<Users className="h-5 w-5" />}
                 description="All time"
                 color="bg-blue-50 text-blue-600"
               />
               <MetricCard 
                 title="Active Users" 
-                value={userStats?.active_users || 0} 
+                value={userStats?.active_users ?? 0} 
                 icon={<Activity className="h-5 w-5" />}
                 description="Last 30 days"
                 color="bg-green-50 text-green-600"
               />
               <MetricCard 
                 title="New Users" 
-                value={userStats?.new_users_today || 0} 
+                value={userStats?.new_users_today ?? 0} 
                 icon={<UserPlus className="h-5 w-5" />}
                 description="Today"
                 color="bg-purple-50 text-purple-600"
               />
               <MetricCard 
                 title="Avg. Ratings" 
-                value={userStats?.average_ratings_per_user || 0} 
+                value={userStats?.average_ratings_per_user ?? 0} 
                 icon={<TrendingUp className="h-5 w-5" />}
                 description="Per user"
                 color="bg-amber-50 text-amber-600"
@@ -140,27 +140,27 @@ export function DetailedUserAnalytics() {
                   >
                     <defs>
                       <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                     <XAxis 
                       dataKey="date" 
                       tickFormatter={(value) => format(new Date(value), 'MMM d')}
-                      stroke="hsl(var(--muted-foreground))"
+                      stroke="var(--muted-foreground)"
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis 
-                      stroke="hsl(var(--muted-foreground))" 
+                      stroke="var(--muted-foreground)" 
                       tickLine={false} 
                       axisLine={false}
                     />
                     <Tooltip 
                       contentStyle={{
-                        backgroundColor: "hsl(var(--background))",
-                        borderColor: "hsl(var(--border))",
+                        backgroundColor: "var(--background)",
+                        borderColor: "var(--border)",
                         borderRadius: "0.5rem",
                         boxShadow: "0 1px 2px hsla(var(--shadow))",
                       }}
@@ -169,7 +169,7 @@ export function DetailedUserAnalytics() {
                     <Area 
                       type="monotone" 
                       dataKey="count" 
-                      stroke="hsl(var(--primary))" 
+                      stroke="var(--primary)" 
                       fillOpacity={1} 
                       fill="url(#colorUsers)"
                       name="Users" 
@@ -189,10 +189,10 @@ export function DetailedUserAnalytics() {
                     layout="vertical"
                     margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
                     <XAxis 
                       type="number" 
-                      stroke="hsl(var(--muted-foreground))" 
+                      stroke="var(--muted-foreground)" 
                       tickLine={false}
                       axisLine={false}
                     />
@@ -200,7 +200,7 @@ export function DetailedUserAnalytics() {
                       dataKey="username" 
                       type="category" 
                       width={100}
-                      stroke="hsl(var(--muted-foreground))"
+                      stroke="var(--muted-foreground)"
                       tickLine={false}
                       axisLine={false}
                       tick={(props) => {
@@ -212,7 +212,7 @@ export function DetailedUserAnalytics() {
                               <div className="flex items-center gap-2">
                                 <Avatar className="h-6 w-6">
                                   <AvatarFallback>
-                                    {user?.username.substring(0, 2).toUpperCase() || "?"}
+                                    {user?.username.substring(0, 2).toUpperCase() ?? "?"}
                                   </AvatarFallback>
                                 </Avatar>
                                 <span className="text-xs truncate w-16">{payload.value}</span>
@@ -229,15 +229,15 @@ export function DetailedUserAnalytics() {
                         return `${value} (Last active: ${user ? format(new Date(user.last_activity), 'MMM d, yyyy') : 'N/A'})`;
                       }}
                       contentStyle={{
-                        backgroundColor: "hsl(var(--background))",
-                        borderColor: "hsl(var(--border))",
+                        backgroundColor: "var(--background)",
+                        borderColor: "var(--border)",
                         borderRadius: "0.5rem",
                         boxShadow: "0 1px 2px hsla(var(--shadow))",
                       }}
                     />
                     <Bar 
                       dataKey="ratings_count" 
-                      fill="hsl(var(--primary))" 
+                      fill="var(--primary)" 
                       radius={[0, 4, 4, 0]}
                       name="Ratings"
                     />
@@ -290,7 +290,7 @@ interface MetricCardProps {
   isDecimal?: boolean;
 }
 
-function MetricCard({ title, value, icon, description, color, isDecimal }: MetricCardProps) {
+function MetricCard({ title, value, icon, description, color, isDecimal }: Readonly<MetricCardProps>) {
   return (
     <div className="bg-card rounded-lg border p-4">
       <div className="flex justify-between">
