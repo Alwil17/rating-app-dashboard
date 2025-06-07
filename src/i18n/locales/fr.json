@@ -42,12 +42,33 @@
     "title": "Gestion des articles",
     "subtitle": "Gérez et organisez votre catalogue d'articles",
     "addItem": "Ajouter un article",
+    "errorLoading": "Erreur lors du chargement des articles",
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet article ?",
     "deleteWarning": "Cette action est irréversible. Cela supprimera définitivement l'article et toutes les données associées.",
     "columns": {
       "name": "Nom",
       "categories": "Catégories",
-      "rating": "Évaluation"
+      "rating": "Évaluation",
+      "actions": "Actions"
+    },
+    "details": {
+      "title": "Détails de l'article",
+      "description": "Description",
+      "categories": "Catégories",
+      "tags": "Tags",
+      "ratings": "Évaluations",
+      "noCategories": "Aucune catégorie attribuée",
+      "noTags": "Aucun tag attribué",
+      "noRatings": "Pas encore d'évaluations"
+    },
+    "form": {
+      "createTitle": "Créer un article",
+      "editTitle": "Modifier l'article",
+      "namePlaceholder": "Entrez le nom de l'article",
+      "descriptionPlaceholder": "Entrez la description de l'article",
+      "imageUrlPlaceholder": "Entrez l'URL de l'image",
+      "submitButton": "Enregistrer l'article",
+      "cancelButton": "Annuler"
     }
   },
   "dashboard": {
