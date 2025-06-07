@@ -624,15 +624,15 @@ function SidebarMenuSkeleton({
           data-sidebar="menu-skeleton-icon"
         />
       )}
-      <Skeleton
-        className="h-4 max-w-(--skeleton-width) flex-1"
-        data-sidebar="menu-skeleton-text"
-        style={
-          {
-            "--skeleton-width": width,
-          } as React.CSSProperties
-        }
-      />
+      <div
+        className="flex-1"
+        style={{ width }}
+      >
+        <Skeleton
+          className="h-4 w-full"
+          data-sidebar="menu-skeleton-text"
+        />
+      </div>
     </div>
   )
 }
