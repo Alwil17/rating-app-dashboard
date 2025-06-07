@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star, Calendar, Tag } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 type ItemDetailsProps = {
   item: ItemResponse | null;
@@ -14,13 +15,15 @@ type ItemDetailsProps = {
 };
 
 export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsProps>) {
+  const { t } = useTranslation();
+
   if (!item) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Item Details</DialogTitle>
+          <DialogTitle>{t('items.details.title')}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-6">
           <div className="flex items-start gap-4">
@@ -35,14 +38,14 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
                   <span>{item.avg_rating.toFixed(1)}</span>
                 </div>
-                <span>({item.count_rating} ratings)</span>
+                <span>({item.count_rating} {t('items.details.ratings')})</span>
               </div>
             </div>
           </div>
 
           {item.description && (
             <div>
-              <h3 className="text-sm font-medium text-muted-foreground mb-1">Description</h3>
+              <h3 className="text-sm font-medium text-muted-foreground mb-1">{t('items.details.description')}</h3>
               <p>{item.description}</p>
             </div>
           )}
@@ -51,7 +54,7 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Tag className="h-4 w-4 text-muted-foreground" />
-                <h3 className="text-sm font-medium text-muted-foreground">Categories</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">{t('items.details.categories')}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {item.categories && item.categories.length > 0 ? (
@@ -61,7 +64,7 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
                     </Badge>
                   ))
                 ) : (
-                  <span className="text-sm text-muted-foreground">No categories</span>
+                  <span className="text-sm text-muted-foreground">{t('items.details.noCategories')}</span>
                 )}
               </div>
             </div>
@@ -69,7 +72,7 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Tag className="h-4 w-4 text-muted-foreground" />
-                <h3 className="text-sm font-medium text-muted-foreground">Tags</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">{t('items.details.tags')}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {item.tags && item.tags.length > 0 ? (
@@ -79,7 +82,7 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
                     </Badge>
                   ))
                 ) : (
-                  <span className="text-sm text-muted-foreground">No tags</span>
+                  <span className="text-sm text-muted-foreground">{t('items.details.noTags')}</span>
                 )}
               </div>
             </div>
@@ -89,14 +92,14 @@ export function ItemDetails({ item, open, onOpenChange }: Readonly<ItemDetailsPr
             <div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <h3 className="text-sm font-medium text-muted-foreground">Created</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">{t('items.details.created')}</h3>
               </div>
               <p>{format(new Date(item.created_at), 'PPP')}</p>
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <h3 className="text-sm font-medium text-muted-foreground">Last Updated</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">{t('items.details.lastUpdated')}</h3>
               </div>
               <p>{format(new Date(item.updated_at), 'PPP')}</p>
             </div>
