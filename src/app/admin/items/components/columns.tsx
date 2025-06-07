@@ -34,6 +34,7 @@ interface ActionsProps {
     onDeleteItem: (itemId: number) => void
     onManageCategories: (item: ItemResponse) => void
     onManageTags: (item: ItemResponse) => void
+    t?: (key: string, options?: any) => string // Add translation function
 }
 
 const Actions = ({
@@ -43,29 +44,30 @@ const Actions = ({
     onDeleteItem,
     onManageCategories,
     onManageTags,
+    t = (key: string) => key, // Default implementation if not provided
 }: ActionsProps) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
+                    <span className="sr-only">{t('common.openMenu')}</span>
                     <MoreHorizontal className="h-4 w-4" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel>{t('common.actions')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => onViewDetails(item)}>
-                    View details
+                    {t('items.actions.viewDetails')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onEditItem(item)}>
-                    Edit item
+                    {t('items.actions.edit')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onManageCategories(item)}>
-                    Manage categories
+                    {t('items.actions.manageCategories')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onManageTags(item)}>
-                    Manage tags
+                    {t('items.actions.manageTags')}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <AlertDialog>
@@ -74,21 +76,20 @@ const Actions = ({
                             onSelect={(e) => e.preventDefault()}
                             className="text-destructive"
                         >
-                            Delete item
+                            {t('items.actions.delete')}
                         </DropdownMenuItem>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogTitle>{t('items.deleteConfirm')}</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete
-                                the item and all associated data.
+                                {t('items.deleteWarning')}
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
                             <AlertDialogAction onClick={() => onDeleteItem(item.id)}>
-                                Delete
+                                {t('common.delete')}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -163,7 +164,7 @@ export function getItemColumns(
         {
             accessorKey: "tags",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Tags" />
+                <DataTableColumnHeader column={column} title={translate("items.columns.tags")} />
             ),
             cell: ({ row }) => {
                 const tags = row.getValue("tags") as ItemResponse["tags"]
@@ -176,10 +177,14 @@ export function getItemColumns(
                                 </Badge>
                             ))
                         ) : (
-                            <span className="text-muted-foreground text-sm">None</span>
+                            <span className="text-muted-foreground text-sm">
+                              {translate("items.columns.none")}
+                            </span>
                         )}
                         {tags.length > 3 && (
-                            <Badge variant="outline">+{tags.length - 3} more</Badge>
+                            <Badge variant="outline">
+                              +{tags.length - 3} {translate("items.columns.more")}
+                            </Badge>
                         )}
                     </div>
                 )
@@ -205,7 +210,7 @@ export function getItemColumns(
         {
             accessorKey: "created_at",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Created" />
+                <DataTableColumnHeader column={column} title={translate("items.columns.created")} />
             ),
             cell: ({ row }) => {
                 return new Date(row.getValue("created_at")).toLocaleDateString()
@@ -223,6 +228,7 @@ export function getItemColumns(
                         onDeleteItem={onDeleteItem}
                         onManageCategories={onManageCategories}
                         onManageTags={onManageTags}
+                        t={translate}
                     />
                 )
             },
