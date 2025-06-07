@@ -12,17 +12,19 @@ import { getTagColumns } from "./components/columns";
 import { toast } from "sonner";
 import { useDeleteTagMutation } from "@/hooks/queries/use-tag.query";
 import { TagFormModal } from "./components/tag-form-modal";
+import { useTranslation } from "react-i18next";
 
-export default function AdmintagsPage() {
+export default function AdminTagsPage() {
     const { setPageTitle } = useBreadcrumb();
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
     const [tagModalOpen, setTagModalOpen] = useState(false);
     const [editingTag, setEditingTag] = useState<Tag | null>(null);
     const deleteMutation = useDeleteTagMutation();
 
     useEffect(() => {
-        setPageTitle('Tags Management');
-    }, [setPageTitle]);
+        setPageTitle(t('tags.title'));
+    }, [setPageTitle, t]);
 
     const { data: tags, isLoading, error } = useQuery<Tag[]>({
         queryKey: ['tags'],
@@ -46,7 +48,7 @@ export default function AdmintagsPage() {
     const handleDeleteTag = (tag: Tag) => {
         deleteMutation.mutate(tag.id, {
             onSuccess: () => {
-                toast.success(`${tag.name} has been deleted successfully`);
+                toast.success(t('tags.deleteSuccess', { name: tag.name }));
                 queryClient.invalidateQueries({ queryKey: ['tags'] });
             },
             onError: () => {
@@ -62,7 +64,7 @@ export default function AdmintagsPage() {
     if (error) {
         return (
             <div className="flex flex-col items-center justify-center h-96">
-                <p className="text-destructive">Error loading tags list</p>
+                <p className="text-destructive">{t('tags.errorLoading')}</p>
                 <p className="text-sm text-muted-foreground">{(error as Error).message}</p>
             </div>
         );
@@ -71,10 +73,10 @@ export default function AdmintagsPage() {
     return (
         <div>
             <PageHeader
-                title="Tags Management"
-                subtitle="Manage and organize your tags"
+                title={t('tags.title')}
+                subtitle={t('tags.subtitle')}
                 action={{
-                    label: "Add new tag",
+                    label: t('tags.addNew'),
                     onClick: handleAddNew,
                 }}
             />
@@ -86,7 +88,7 @@ export default function AdmintagsPage() {
                     </div>
                 ) : (
                     <DataTable
-                        columns={getTagColumns(handleEditTag, handleDeleteTag)}
+                        columns={getTagColumns(handleEditTag, handleDeleteTag, t)}
                         data={tags || []}
                     />
                 )}
