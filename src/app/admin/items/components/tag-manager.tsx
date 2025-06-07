@@ -14,6 +14,7 @@ import { ItemResponse } from "@/schema/item.schema";
 import { useUpdateItemTagsMutation } from "@/hooks/queries/use-item.query";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 
 type TagManagerProps = {
   open: boolean;
@@ -30,7 +31,8 @@ export function TagManager({
 }: Readonly<TagManagerProps>) {
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const updateMutation = useUpdateItemTagsMutation(item?.id || 0);
+  const updateMutation = useUpdateItemTagsMutation(item?.id ?? 0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (item && open) {
@@ -76,18 +78,18 @@ export function TagManager({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Manage Tags for {item?.name}</DialogTitle>
+          <DialogTitle>{t('items.tagManager.title', { name: item?.name })}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
             <Input
-              placeholder="Add tag..."
+              placeholder={t('items.tagManager.addTagPlaceholder')}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
             />
             <Button type="button" onClick={addTag}>
-              Add
+              {t('common.add')}
             </Button>
           </div>
 
@@ -102,20 +104,20 @@ export function TagManager({
                     className="ml-1 rounded-full h-4 w-4 inline-flex items-center justify-center text-xs"
                   >
                     <X className="h-3 w-3" />
-                    <span className="sr-only">Remove {tag}</span>
+                    <span className="sr-only">{t('common.remove', { item: tag })}</span>
                   </button>
                 </Badge>
               ))
             ) : (
               <p className="text-center text-muted-foreground w-full my-auto">
-                No tags added
+                {t('items.tagManager.noTags')}
               </p>
             )}
           </div>
         </div>
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button
             onClick={handleSave}
@@ -124,7 +126,7 @@ export function TagManager({
             {updateMutation.isPending && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Save changes
+            {t('common.saveChanges')}
           </Button>
         </DialogFooter>
       </DialogContent>
