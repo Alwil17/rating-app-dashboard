@@ -1,115 +1,118 @@
 # Rating App Dashboard
 
-A modern dashboard for managing and administering your Rating API.
-
-## Overview
-
-**Rating App Dashboard** is a web-based admin panel designed to help you efficiently manage and monitor your rating system. It consumes your custom Rating API, providing a user-friendly interface for administrative tasks such as viewing, editing, and managing ratings and users.
+A modern, responsive admin dashboard for managing the Rating App system.
 
 ## Features
 
-- **Dashboard Overview:** Visualize key metrics and recent activity.
-- **User Management:** View and manage users with ease.
-- **Ratings Management:** Approve, edit, or delete ratings.
-- **Search & Filter:** Quickly find users or ratings.
-- **Responsive Design:** Works seamlessly on desktop and mobile devices.
-- **Authentication:** Secure admin access (if enabled).
+- 🔐 Secure authentication and role-based access
+- 📊 Comprehensive analytics dashboard
+- 🌍 Internationalization (English and French)
+- 🔄 Real-time data updates
+- 📱 Fully responsive design
+- 🎨 Dark/light theme support
+- 📋 Item, category, and tag management
+- 👥 User management
+- ⭐ Rating management and analytics
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **State Management**: React Query, React Context
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **Form Handling**: React Hook Form with Zod validation
+- **Data Visualization**: Recharts
+- **API Client**: Axios
+- **Authentication**: JWT
+- **Internationalization**: i18next
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v16+ recommended)
-- Your Rating API running and accessible
+- Node.js 18 or higher
+- npm or yarn
+- Backend API server running (see RatingApp project)
 
 ### Installation
 
-1. **Clone the repository:**
+1. Clone the repository
    ```sh
    git clone https://github.com/Alwil17/rating-app-dashboard.git
    cd rating-app-dashboard
    ```
 
-2. **Install dependencies:**
+2. Install dependencies
    ```sh
    npm install
+   # or
+   yarn
    ```
 
-3. **Configure environment variables:**
-
-   Create a `.env` file in the root directory and add your API endpoint:
+3. Create a `.env` based on `.env.example` file with the following content:
    ```
-   NEXT_PUBLIC_API_URL=https://rating-api-fvz9.onrender.com
+   NEXT_PUBLIC_API_URL=http://localhost:8000
    ```
 
-4. **Run the development server:**
+4. Start the development server
    ```sh
    npm run dev
+   # or
+   yarn dev
    ```
 
-5. **Open your browser:**
-   ```
-   http://localhost:3000
-   ```
-
-## Usage
-
-- Log in as an admin (if authentication is enabled).
-- Use the sidebar to navigate between dashboard sections.
-- Manage users and ratings as needed.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router routes and pages
-│   ├── auth/               # Authentication routes
-│   ├── board/              # Main application routes (formerly dashboard)
-│   └── ...
-├── components/             # Reusable UI components
-│   ├── ui/                 # Base components (shadcn/ui only)
-│   ├── enhanced/           # Enhanced shadcn components with logic
-│   ├── shared/             # Custom shared components
-│   │   ├── navigation/     # Navigation-related components (app.sidebar, search.form, team.switcher)
-│   │   ├── theme/          # Theme-related components (mode-toggle)
-│   │   └── others/         # Other shared components (feedback.dialog)
-│   └── ...
-├── config/                 # Global configuration
-│   ├── constants.ts        # Application constants
-│   ├── messages.ts         # Error and success messages
-│   ├── routes.ts           # Centralized route definitions
-│   └── navigation-items.tsx # Navigation configuration
-├── hooks/                  # Custom React hooks
-│   ├── queries/            # TanStack Query hooks
-│   └── ...
-├── lib/                    # Utilities and functions
-│   └── utils.ts            # Utility functions
-├── schema/                 # Validation schemas (Zod)
-├── server/                 # Server-side logic
-│   ├── services/           # Business services
-│   ├── middleware/         # Server middleware
-│   └── ...
-├── types/                  # TypeScript type definitions
-│   ├── auth.types.ts       # Authentication related types
-│   ├── rate-limiter.types.ts # Rate limiter related types
-│   └── ...
-└── utils/                  # Specific utilities
-    ├── providers/          # React providers
-    └── ...
+rating-app-dashboard/
+├── docs/               # Documentation files
+├── public/             # Static assets
+├── src/
+│   ├── app/            # Next.js app router
+│   │   ├── admin/      # Admin pages
+│   │   ├── auth/       # Authentication pages
+│   │   └── ...         # Other pages
+│   ├── components/     # Reusable components
+│   │   ├── ui/         # UI components based on shadcn/ui
+│   │   └── ...         # Other components
+│   ├── contexts/       # React contexts
+│   ├── hooks/          # Custom React hooks
+│   │   ├── queries/    # React Query hooks
+│   │   └── ...         # Other hooks
+│   ├── i18n/           # Internationalization
+│   │   └── locales/    # Translation files
+│   ├── lib/            # Utility functions
+│   ├── providers/      # React providers
+│   ├── schema/         # Zod schemas
+│   └── utils/          # Utility functions
+└── ...
 ```
+
+## Documentation
+
+- [API Reference](./docs/API-REFERENCE.md)
+- [Deployment Guide](./docs/DEPLOYMENT.md)
+- [Security](./docs/SECURITY.md)
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a pull request
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 
-Inspired by [univ-check-ui](https://github.com/tiger-githubb/univ-check-ui).
-
----
-
-**Made with ❤️ for admin productivity.**
+- [Next.js](https://nextjs.org/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Recharts](https://recharts.org/)
+- [React Query](https://react-query.tanstack.com/)
