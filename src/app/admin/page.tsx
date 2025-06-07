@@ -5,19 +5,17 @@ import { useBreadcrumb } from '@/contexts/breadcrumb.context';
 import { useEffect } from 'react';
 import { useStats } from '@/hooks/useStats';
 import { useChartData } from '@/hooks/useChartData';
-import { Users, Star, Activity, Loader2 } from "lucide-react";
+import { Users, Star, Activity } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Import extracted components
 import { StatsCards } from './components/stats-cards';
 import { RatingTrendChart } from './components/rating-trend-chart';
 import { TopItemsChart } from './components/top-items-chart';
 import { CategoryDistributionChart } from './components/category-distribution-chart';
-import { RecentActivity } from './components/recent-activity';
 // Import the new component
 import { DetailedRatingsAnalytics } from './components/detailed-ratings-analytics';
 
