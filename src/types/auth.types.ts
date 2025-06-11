@@ -3,6 +3,7 @@ export type UserRole = 'admin' | 'user';
 export interface AuthResponse {
   user: User;
   token: string;
+  refreshToken: string;
 }
 
 export interface User {
@@ -11,6 +12,7 @@ export interface User {
   name: string;
   phone: string;
   role: UserRole;
+  image_url: string | null;
   createdAt: string;
   updatedAt?: string;
 }
